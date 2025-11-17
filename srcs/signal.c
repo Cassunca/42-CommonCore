@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2025/11/17 17:19:24 by kamys            ###   ########.fr       */
+/*   Created: 2025/11/17 16:54:01 by kamys             #+#    #+#             */
+/*   Updated: 2025/11/17 17:20:00 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "libft.h"
-# include <stdio.h>
-# include <signal.h>
-# include <unistd.h>
-# include <string.h>
+static volatile sig_atomic_t	g_signal_status;
 
-// signal.c
-int		get_singal(void);
-void	reset_signal(void);
-void	handler(int sig);
+int	get_singal(void)
+{
+	return (g_signal_status);
+}
 
-#endif
+void	reset_signal(void)
+{
+	g_signal_status = 0;
+}
+
+void	handler(int sig)
+{
+	g_signal_status = sig;
+	ft_putstr_fd("\n> ", 1);
+}

@@ -17,7 +17,8 @@ SRCSDIR     = srcs
 OBJDIR      = objs
 
 # Source files
-SRCS 		= main.c
+SRCS 		= main.c		\
+			  signal.c		
 
 # Add directory prefix
 SRCS := $(addprefix $(SRCSDIR)/, $(SRCS))
@@ -46,18 +47,18 @@ $(OBJDIR):
 
 # Compile libft silently
 $(LIBFT):
-	@$(MAKE) $(RUNLIB) -s
+	@$(MAKE) $(RUNLIB) -s > /dev/null 2>&1
 	@printf "$(GREEN)✅ Libft successfully compiled$(NC)\n"
 
 # Cleanup
 clean:
 	@$(RM) $(OBJDIR)
-	@$(MAKE) clean $(RUNLIB) -s
+	@$(MAKE) clean $(RUNLIB) -s > /dev/null 2>&1
 	@printf "$(YELLOW)🧹 Objects cleaned$(NC)\n"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(MAKE) fclean $(RUNLIB) -s
+	@$(MAKE) fclean $(RUNLIB) -s > /dev/null 2>&1
 	@printf "$(YELLOW)🗑️ Executable removed$(NC)\n"
 
 re: fclean all
