@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2025/11/17 18:31:52 by kamys            ###   ########.fr       */
+/*   Updated: 2025/11/18 14:14:39 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_env_table
+{
+	t_env	*table;
+	size_t	size;
+} t_env_table;
 
 // signal.c
 int		get_singal(void);
