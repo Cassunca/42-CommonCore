@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2025/11/18 16:25:48 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:20:23 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ t_env			*env_new(char *key, char *value);
 void			env_set(t_env_table *table, char *key, char *value);
 void			load_env(t_env_table *table, char **envp);
 char			**env_to_envp(t_env_table *table);
+char			*env_get(t_env_table *table, char *key);
+void			env_unset(t_env_table *table, char *key);
 
 
 #endif
