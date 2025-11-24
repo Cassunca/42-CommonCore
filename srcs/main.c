@@ -6,50 +6,81 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2025/11/24 16:11:56 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:55:27 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	print_env(t_env_table *env)
+{
+	char	**new_env;
+	size_t	i;
+
+	new_env = env_export(env);
+	i = 0;
+	while (new_env[i])
+		printf("%s\n", new_env[i++]);
+}
+
+void	input(char	*line, t_env_table	*env)
+{
+	if (!ft_strncmp(line, "pwd", 4))
+		printf("%s\n", env_get(env, "PWD"));
+	if (!ft_strncmp(line, "env", 4))
+		print_env(env);
+	if (!ft_strncmp(line, "exit", 5))
+	{
+		free(line);
+		printf("exit\n");
+		exit(0);
+	}
+}
+
+int	run_interactive_shell(t_env_table *env)
+{
+	char		*line;
+
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			break ;
+		if (*line)
+			add_history(line);
+		input(line, env);
+		free(line);
+	}
+	return (0);
+}
+
+int	run_command_mode(int argc, char **argv)
+{
+	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 2))
+	{
+		printf("algum dia vai começar a executar -> %s\n", argv[2]);
+		return (0);
+	}
+	ft_putstr_fd("usage: minishell -c \"command\"\n", 2);
+	return (1);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
-	t_env_table	*env = env_init(97, envp);
+	t_env_table	*env;
+	int			status;
 
+	env = env_init(97, envp);
+	if (!env)
+		return (1);
 	setup_sig();
 	if (isatty(STDIN_FILENO))
-	{
-		while (1)
-		{
-			line = readline("> ");
-			if (!line)
-				break ;
-			if (*line)
-				add_history(line);
-			if (!ft_strncmp(line, "env", 4))
-			{
-				char **new_env = env_export(env);
-				for (size_t i = 0; new_env[i]; i++)
-					printf("%s\n",	new_env[i]);
-			}
-			if (!ft_strncmp(line, "exit", 5))
-			{
-				free(line);
-				break ;
-			}
-			free(line);
-		}		
-	}
+		status = run_interactive_shell(env);
 	else
-	{
-		if (argc >= 2)
-			if (!ft_strncmp(argv[1], "-c", 2))
-				printf("algum dia vai começar a executar -> %s\n", argv[2]);
-	}
+		status = run_command_mode(argc, argv);
 	rl_clear_history();
 	rl_cleanup_after_signal();
 	env_destroy(env);
 	printf("exit\n");
-	return (0);
+	return (status);
 }
