@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:07:16 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/11/24 15:35:12 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:15:13 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 static void	load_env(t_env_table *table, char **envp)
 {
-	int	i;
+	int		i;
+	char	*entry;
+	char	*equal;
+	char	*key;
+	char	*value;
 
 	i = 0;
 	while (envp[i])
 	{
-		char	*entry = envp[i];
-		char	*equal = ft_strchr(entry, '=');
+		entry = envp[i];
+		equal = ft_strchr(entry, '=');
 		if (equal)
 		{
-			size_t	key_len = equal - entry;
-			char	*key = ft_substr(entry, 0, key_len);
-			char	*value = ft_strdup(equal + 1);
+			key = ft_substr(entry, 0, equal - entry);
+			value = ft_strdup(equal + 1);
 			env_set(table, key, value);
 			free(key);
 			free(value);
@@ -34,7 +37,7 @@ static void	load_env(t_env_table *table, char **envp)
 	}
 }
 
-t_env_table *env_init(size_t size, char **envp)
+t_env_table	*env_init(size_t size, char **envp)
 {
 	t_env_table	*table;
 

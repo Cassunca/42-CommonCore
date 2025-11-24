@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2025/11/24 15:24:12 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:11:56 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 			if (!ft_strncmp(line, "exit", 5))
 			{
 				free(line);
-				break ;				
+				break ;
 			}
 			free(line);
 		}		

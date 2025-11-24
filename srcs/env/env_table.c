@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_sla.c                                          :+:      :+:    :+:   */
+/*   env_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:11:23 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/11/24 15:11:51 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:13:02 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	env_set(t_env_table *table, char *key, char *value)
 	unsigned long	idx;
 	t_env			*curr;
 	t_env			*new;
-	
+
 	idx = hash(key) % table->size;
 	curr = table->buckets[idx];
 	while (curr)
@@ -46,7 +46,7 @@ void	env_unset(t_env_table *table, char *key)
 	prev = NULL;
 	while (curr)
 	{
-		if (strcmp(curr->key, key) == 0)  // rebuild ft_strcmp
+		if (strcmp(curr->key, key) == 0) // rebuild ft_strcmp
 		{
 			if (prev)
 				prev->next = curr->next;
@@ -55,7 +55,7 @@ void	env_unset(t_env_table *table, char *key)
 			free(curr->key);
 			free(curr->value);
 			free(curr);
-			return ;			
+			return ;
 		}
 		prev = curr;
 		curr = curr->next;
@@ -66,12 +66,12 @@ char	*env_get(t_env_table *table, char *key)
 {
 	unsigned long	idx;
 	t_env			*curr;
-	
+
 	idx = hash(key) % table->size;
 	curr = table->buckets[idx];
 	while (curr)
 	{
-		if (strcmp(curr->key, key) == 0)  // rebuild ft_strcmp
+		if (strcmp(curr->key, key) == 0) // rebuild ft_strcmp
 			return (curr->value);
 		curr = curr->next;
 	}

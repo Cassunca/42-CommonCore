@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:14:19 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/11/24 16:08:14 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:11:07 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static char	*entry_line(t_env *curr)
 	char	*tmp;
 
 	tmp = ft_strjoin(curr->key, "=");
-	entry = ft_strjoin(tmp, curr->value);	
+	entry = ft_strjoin(tmp, curr->value);
 	free(tmp);
-	return (entry);	
+	return (entry);
 }
 
 char	**env_export(t_env_table *table)
@@ -49,7 +49,7 @@ char	**env_export(t_env_table *table)
 	t_env	*curr;
 	size_t	j;
 	size_t	i;
-	
+
 	envp = malloc(sizeof(char *) * (hash_len(table) + 1));
 	j = 0;
 	i = 0;
