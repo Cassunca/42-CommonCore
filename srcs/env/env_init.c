@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:07:16 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/11/24 16:15:13 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/11/25 13:59:16 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	env_destroy(t_env_table *table)
 		{
 			free(curr->key);
 			free(curr->value);
-			free(curr);
 			curr = curr->next;
 		}
+		free(curr);
 		i++;
 	}
 	free(table->buckets);
