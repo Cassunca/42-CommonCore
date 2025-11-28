@@ -15,6 +15,7 @@ RM          = rm -rf
 RUNLIB      = -C libft
 
 # Directories
+UTILSDIR	= utils
 LEXERDIR	= lexer
 ENVDIR      = env
 SRCSDIR     = srcs
@@ -30,14 +31,21 @@ SRCS_ENV	= hash.c		\
 			  env_table.c	\
 			  env_export.c
 
-SRCS_LEXER	= lexer.c
+SRCS_UTILS	= ft_isspace.c 
+  
+SRCS_LEXER	= lexer.c		\
+			  lexer_operetor.c	\
+			  lexer_word.c	\
+			  lexer_utils.c 
+
+# Add directory prefix
+SRCS_ENV := $(addprefix $(SRCSDIR)/$(ENVDIR)/, $(SRCS_ENV))
+
+SRCS_UTILS := $(addprefix $(SRCSDIR)/$(UTILSDIR)/, $(SRCS_UTILS))
 
 SRCS_LEXER := $(addprefix $(SRCSDIR)/$(LEXERDIR)/, $(SRCS_LEXER))
 
-SRCS_ENV := $(addprefix $(SRCSDIR)/$(ENVDIR)/, $(SRCS_ENV))
-
-# Add directory prefix
-SRCS := $(addprefix $(SRCSDIR)/, $(SRCS)) $(SRCS_ENV) $(SRCS_LEXER)
+SRCS := $(addprefix $(SRCSDIR)/, $(SRCS)) $(SRCS_ENV) $(SRCS_LEXER) $(SRCS_UTILS)
 
 # Object files
 OBJS = $(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)

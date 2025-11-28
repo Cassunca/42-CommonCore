@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2025/11/28 15:36:01 by amyrodri         ###   ########.fr       */
+/*   Created: 2025/11/28 15:29:28 by amyrodri          #+#    #+#             */
+/*   Updated: 2025/11/28 15:39:42 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "utils.h"
 
-# include "libft.h"
-# include "env.h"
-# include "lexer.h"
-# include "utils.h"
-
-# include <stdio.h>
-# include <signal.h>
-# include <unistd.h>
-# include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-// signal.c
-int				get_singal(void);
-void			reset_signal(void);
-void			handler(int sig);
-void			setup_sig(void);
-
-#endif
+int	ft_isspace(const char c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
+}
