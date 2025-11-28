@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:57 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/11/28 17:54:47 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/11/28 20:37:46 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_token	*tokenize_operetor(const char *s, int *i)
 {
 	int					j;
 	int					len;
-	static const t_op	ops[] = { // ver se isso é permitido ^.^
+	static const t_op	ops[] = {// ver se isso é permitido ^.^
 	{"<<", TK_HEREDOC},
 	{">>", TK_APPEND},
 	{"&&", TK_AND},

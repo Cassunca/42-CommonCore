@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:11:23 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/11/24 16:13:02 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/11/28 20:36:59 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	env_set(t_env_table *table, char *key, char *value)
 	curr = table->buckets[idx];
 	while (curr)
 	{
-		if (strcmp(curr->key, key) == 0) // rebuild ft_strcmp
+		if (ft_strcmp(curr->key, key) == 0)
 		{
 			free(curr->value);
 			curr->value = ft_strdup(value);
@@ -46,7 +46,7 @@ void	env_unset(t_env_table *table, char *key)
 	prev = NULL;
 	while (curr)
 	{
-		if (strcmp(curr->key, key) == 0) // rebuild ft_strcmp
+		if (ft_strcmp(curr->key, key) == 0)
 		{
 			if (prev)
 				prev->next = curr->next;
@@ -71,7 +71,7 @@ char	*env_get(t_env_table *table, char *key)
 	curr = table->buckets[idx];
 	while (curr)
 	{
-		if (strcmp(curr->key, key) == 0) // rebuild ft_strcmp
+		if (ft_strcmp(curr->key, key) == 0)
 			return (curr->value);
 		curr = curr->next;
 	}
