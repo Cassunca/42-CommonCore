@@ -31,7 +31,8 @@ SRCS_ENV	= hash.c		\
 			  env_table.c	\
 			  env_export.c
 
-SRCS_UTILS	= ft_isspace.c 
+SRCS_UTILS	= ft_isspace.c	\
+			  ft_strcmp.c	\
   
 SRCS_LEXER	= lexer.c		\
 			  lexer_operetor.c	\
