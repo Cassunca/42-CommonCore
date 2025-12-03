@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/03 16:37:17 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/12/03 16:51:31 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	input(char	*line, t_env_table	*env)
 		cd(env, tmp[1]);
 	if (!ft_strcmp(tmp[0], "export"))
 		export(env, tmp[1]);
+	if (!ft_strcmp(tmp[0], "unset"))
+		unset(env, tmp[1]);
 	if (!ft_strncmp(tmp[0], "exit", 5))
 	{
 		free(line);

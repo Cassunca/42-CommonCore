@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built.h                                            :+:      :+:    :+:   */
+/*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 13:00:29 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/03 16:49:08 by cassunca         ###   ########.fr       */
+/*   Created: 2025/12/03 16:40:49 by cassunca          #+#    #+#             */
+/*   Updated: 2025/12/03 16:55:01 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILT_H
-# define BUILT_H
+#include "built.h"
 
-# include <dirent.h>
-# include "minishell.h"
+void	unset(t_env_table *env, char *key)
+{
+	char	*start;
 
-typedef struct s_env_table	t_env_table;
-
-void	print_env(t_env_table *env);
-void	cd(t_env_table *env, char *path);
-void	export(t_env_table *env, char *key_value);
-void	unset(t_env_table *env, char *key);
-
-#endif
+	start = key;
+	while (*start)
+	{
+		if (*start == '=')
+			return ;
+		start++;
+	}
+	env_unset(env, key);
+}

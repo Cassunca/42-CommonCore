@@ -34,15 +34,16 @@ SRCS_ENV	= hash.c			\
 
 SRCS_UTILS	= ft_isspace.c		\
 			  ft_strcmp.c		\
-  
+
 SRCS_LEXER	= lexer.c			\
 			  lexer_operetor.c	\
 			  lexer_word.c		\
-			  lexer_utils.c 
+			  lexer_utils.c
 
 SRCS_BUILT	= built_env.c		\
 			  built_cd.c		\
-			  built_export.c
+			  built_export.c	\
+			  built_unset.c
 
 # Add directory prefix
 SRCS_BUILT	:= $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
