@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/03 13:29:20 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/12/03 16:16:02 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,25 @@
 void	input(char	*line, t_env_table	*env)
 {
 	t_token	*token;
+	char	**tmp;
 
 	token = lexer(line);
 	if (!token)
 		return ;
 	print_tokens(token);
-	if (!ft_strncmp(line, "pwd", 4))
+	tmp = ft_split(line, ' ');
+	if (!ft_strncmp(tmp[0], "pwd", 4))
 		printf("%s\n", env_get(env, "PWD"));
-	if (!ft_strncmp(line, "env", 4))
+	if (!ft_strncmp(tmp[0], "env", 4))
 		print_env(env);
-	if (!ft_strncmp(line, "exit", 5))
+	if (!ft_strcmp(tmp[0], "cd"))
+	{
+		cd(env, tmp[1]);
+	}
+	if (!ft_strncmp(tmp[0], "exit", 5))
 	{
 		free(line);
+		free(tmp);
 		printf("exit\n");
 		exit(0);
 	}
