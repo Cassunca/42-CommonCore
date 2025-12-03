@@ -101,8 +101,9 @@ SRCS_EXEC	= exec.c				\
 			  exec_heredoc_utils.c	\
 			  exec_heredoc_utils2.c\
 
-SRCS_BUILT	= built_env.c \
-			  built_cd.c
+SRCS_BUILT	= built_env.c		\
+			  built_cd.c		\
+			  built_export.c
 
 # Add directory prefix
 SRCS_ALIAS	:= $(addprefix $(SRCSDIR)/$(ALIASDIR)/, $(SRCS_ALIAS))
@@ -119,7 +120,7 @@ SRCS_PROMPT	:= $(addprefix $(SRCSDIR)/$(PROMPTDIR)/, $(SRCS_PROMPT))
 
 SRCS_PARSER	:= $(addprefix $(SRCSDIR)/$(PARSERDIR)/, $(SRCS_PARSER))
 
-SRCS_BUILT := $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
+SRCS_BUILT	:= $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
 
 SRCS_ENV	:= $(addprefix $(SRCSDIR)/$(ENVDIR)/, $(SRCS_ENV))
 
