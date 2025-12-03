@@ -36,12 +36,12 @@ SRCS_ENV	= hash.c					\
 			  env_table.c				\
 			  env_export.c
 
-SRCS_UTILS	= ft_isspace.c			\
-			  ft_strcmp.c			\
+SRCS_UTILS	= ft_isspace.c				\
+			  ft_strcmp.c				\
 
-SRCS_LEXER	= lexer.c				\
+SRCS_LEXER	= lexer.c					\
 			  lexer_operetor.c		\
-			  lexer_word.c			\
+			  lexer_word.c				\
 			  lexer_utils.c
 
 SRCS_BUILT	= built_env.c			\
@@ -70,8 +70,9 @@ SRCS_PROMPT	= prompt_init.c			\
 			  prompt_parser.c		\
 			  prompt_default.c
 
-SRCS_BUILT	= built_env.c \
-			  built_cd.c
+SRCS_BUILT	= built_env.c		\
+			  built_cd.c		\
+			  built_export.c
 
 # Add directory prefix
 SRCS_BUILT	:= $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
@@ -80,7 +81,7 @@ SRCS_PROMPT	:= $(addprefix $(SRCSDIR)/$(PROMPTDIR)/, $(SRCS_PROMPT))
 
 SRCS_PARSER	:= $(addprefix $(SRCSDIR)/$(PARSERDIR)/, $(SRCS_PARSER))
 
-SRCS_BUILT := $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
+SRCS_BUILT	:= $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
 
 SRCS_ENV	:= $(addprefix $(SRCSDIR)/$(ENVDIR)/, $(SRCS_ENV))
 
