@@ -70,7 +70,8 @@ SRCS_PROMPT	= prompt_init.c			\
 			  prompt_parser.c		\
 			  prompt_default.c
 
-SRCS_BUILT	= built_env.c
+SRCS_BUILT	= built_env.c \
+			  built_cd.c
 
 # Add directory prefix
 SRCS_BUILT	:= $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
