@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built.h                                            :+:      :+:    :+:   */
+/*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 13:00:29 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/05 16:21:16 by kamys            ###   ########.fr       */
+/*   Created: 2025/12/05 16:09:13 by kamys             #+#    #+#             */
+/*   Updated: 2025/12/05 16:20:46 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILT_H
-# define BUILT_H
+#include "built.h"
 
-# include <dirent.h>
-# include "minishell.h"
+void	pwd(void)
+{
+	char	*cwd;
 
-typedef struct s_env_table	t_env_table;
-
-void	print_env(t_env_table *env);
-void	cd(t_env_table *env, char *path);
-void	export(t_env_table *env, char *key_value);
-void	unset(t_env_table *env, char *key);
-void	echo(t_env_table *env, char *flag, char *line);
-void	pwd(void);
-
-#endif
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		perror("pwd");
+	else
+	{
+		printf("%s\n", cwd);
+		free(cwd);
+	}
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/03 13:33:12 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/12/05 16:15:02 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <signal.h>
 # include <unistd.h>
 # include <string.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 

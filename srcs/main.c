@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/03 18:35:43 by cassunca         ###   ########.fr       */
+/*   Updated: 2025/12/05 16:21:57 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	input(char	*line, t_env_table	*env)
 	print_tokens(token);
 	tmp = ft_split(line, ' ');
 	if (!ft_strncmp(tmp[0], "pwd", 4))
-		printf("%s\n", env_get(env, "PWD"));
+		pwd();
 	if (!ft_strncmp(tmp[0], "env", 4))
 		print_env(env);
 	if (!ft_strcmp(tmp[0], "cd"))
@@ -41,7 +41,6 @@ void	input(char	*line, t_env_table	*env)
 		printf("exit\n");
 		exit(0);
 	}
-	printf("\n");
 }
 
 int	run_interactive_shell(t_env_table *env)
