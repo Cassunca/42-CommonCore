@@ -15,6 +15,7 @@ RM          = rm -rf
 RUNLIB      = -C libft
 
 # Directories
+PARSERDIR	= parser
 UTILSDIR	= utils
 LEXERDIR	= lexer
 ENVDIR      = env
@@ -39,7 +40,11 @@ SRCS_LEXER	= lexer.c		\
 			  lexer_word.c	\
 			  lexer_utils.c 
 
+SRCS_PARSER	= parser.c
+
 # Add directory prefix
+SRCS_PARSER := $(addprefix $(SRCSDIR)/$(PARSERDIR)/, $(SRCS_PARSER))
+
 SRCS_ENV := $(addprefix $(SRCSDIR)/$(ENVDIR)/, $(SRCS_ENV))
 
 SRCS_UTILS := $(addprefix $(SRCSDIR)/$(UTILSDIR)/, $(SRCS_UTILS))
