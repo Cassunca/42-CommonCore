@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 14:37:31 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/09 18:01:28 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/12/09 18:45:39 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int	check_borders(t_token *tokens)
 	head = tokens;
 	if (token_op(head->type))
 	{
-		printf("Syntax %s : error init\n", head->value);
+		printf("Syntax %s : error\n", head->value);
 		return (1);
 	}
 	while (head->next)
 		head = head->next;
 	if (token_op(head->type))
 	{
-		printf("Syntax %s : error end\n", head->value);
+		printf("Syntax %s : error\n", head->value);
 		return (1);
 	}
 	return (0);
@@ -52,7 +52,7 @@ int	check_next_token(t_token *tokens)
 	{
 		if (token_op(tokens->next->type))
 		{
-			printf("Syntax %s : error middle\n", tokens->next->value);
+			printf("Syntax %s : error\n", tokens->next->value);
 			return (1);
 		}
 	}
@@ -83,7 +83,6 @@ t_token	*check_paren(t_token *tokens)
 		printf("syntax: unexpected '('\n");
 	return (NULL);
 }
-
 
 int	check_syntax(t_token *tokens)
 {
