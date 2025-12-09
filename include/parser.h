@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 17:40:05 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/08 12:05:51 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/09 14:14:22 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,9 @@ typedef struct s_redir
 	char			*file;
 	struct s_redir	*next;
 }	t_redir;
+
+typedef struct s_token	t_token;
+
+void	parser(t_token *tokens);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2025/11/28 15:36:01 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/12/09 14:11:10 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "env.h"
 # include "lexer.h"
 # include "utils.h"
+# include "parser.h"
 
 # include <stdio.h>
 # include <signal.h>
