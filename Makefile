@@ -101,10 +101,12 @@ SRCS_ALIAS	= alias_init.c			\
 			  alias_new.c			\
 			  alias_table.c			
 
-SECS_EXEC	= exec.c				\
-			= exec_cmd.c			\
-			= exec_redirect.c		\
-			= stub.c
+SRCS_EXEC	= exec.c				\
+			  exec_cmd.c			\
+			  exec_redirect.c		\
+			  stub.c				\
+			  exec_utils.c			\
+			  tester.c
 
 # Add directory prefix
 SRCS_ALIAS	:= $(addprefix $(SRCSDIR)/$(ALIASDIR)/, $(SRCS_ALIAS))
