@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_syntax.c                                     :+:      :+:    :+:   */
+/*   parser_syntax.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 14:37:31 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/09 18:45:39 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/12/11 01:08:01 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-int	token_op(t_token_type token)
-{
-	if (token == TK_PIPE
-		|| token == TK_AND
-		|| token == TK_OR
-		|| token == TK_LIST
-		|| token == TK_REDIR_IN
-		|| token == TK_REDIR_OUT
-		|| token == TK_HEREDOC
-		|| token == TK_APPEND)
-		return (1);
-	return (0);
-}
 
 int	check_borders(t_token *tokens)
 {
@@ -84,10 +70,24 @@ t_token	*check_paren(t_token *tokens)
 	return (NULL);
 }
 
+int	handle_paren_open(t_token **head_ptr)
+{
+	t_token	*end;
+	t_token	*head;
+
+	head = *head_ptr;
+	end = check_paren(head);
+	if (!end)
+		return (1);
+	if (check_inside(head->next, end))
+		return (1);
+	*head_ptr = end->next;
+	return (0);
+}
+
 int	check_syntax(t_token *tokens)
 {
 	t_token	*head;
-	t_token	*end;
 
 	head = tokens;
 	if (check_borders(head))
@@ -98,10 +98,8 @@ int	check_syntax(t_token *tokens)
 			return (1);
 		if (head->type == TK_LPAREN)
 		{
-			end = check_paren(head);
-			if (!end)
+			if (handle_paren_open(&head))
 				return (1);
-			head = end->next;
 			continue ;
 		}
 		if (head->type == TK_RPAREN)

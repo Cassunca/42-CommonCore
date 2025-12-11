@@ -36,14 +36,15 @@ SRCS_ENV	= hash.c				\
 
 SRCS_UTILS	= ft_isspace.c			\
 			  ft_strcmp.c			\
-  
+
 SRCS_LEXER	= lexer.c				\
 			  lexer_operetor.c		\
 			  lexer_word.c			\
-			  lexer_utils.c 
+			  lexer_utils.c
 
 SRCS_PARSER = parser.c				\
-			  check_syntax.c 
+			  parser_syntax.c		\
+			  parser_utils.c
 
 # Add directory prefix
 SRCS_PARSER	:= $(addprefix $(SRCSDIR)/$(PARSERDIR)/, $(SRCS_PARSER))
