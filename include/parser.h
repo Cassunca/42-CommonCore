@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 17:40:05 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/11 05:27:06 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/12/11 05:40:55 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef enum s_token_type	t_token_type;
 typedef struct s_token		t_token;
 typedef enum s_token_type	t_token_type;
 
-void						parser(t_token *tokens);
+t_ast						*parser(t_token *tokens);
 int							check_syntax(t_token *tokens);
 
 t_ast						*parse_sequence(t_token **tokens);
