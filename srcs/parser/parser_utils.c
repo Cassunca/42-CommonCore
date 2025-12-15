@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 23:51:43 by cassunca          #+#    #+#             */
-/*   Updated: 2025/12/11 01:03:02 by cassunca         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:10:02 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_in_end(t_token *start, t_token *end)
 	while (curr != end)
 	{
 		if (prev && token_op(prev->type)
-		&& token_op(curr->type))
+			&& token_op(curr->type))
 		{
 			printf("Syntax %s : error\n", prev->value);
 			return (1);
