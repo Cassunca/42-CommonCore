@@ -6,7 +6,7 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:05:57 by cassunca          #+#    #+#             */
-/*   Updated: 2025/12/11 05:31:32 by cassunca         ###   ########.fr       */
+/*   Updated: 2025/12/18 11:09:57 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 int	is_builtin(char **av)
 {
-	(void)av;
+	if (!av || !av[0])
+		return (0);
+	if (ft_strcmp(av[0], "cd") == 0)
+		return (1);
+	if (ft_strcmp(av[0], "echo") == 0)
+		return (1);
 	return (0);
 }
 
@@ -39,7 +44,8 @@ t_ast	*built_ast(t_token *tokens)
 {
 	char	**av_ls;
 	t_cmd	*cmd_content;
-	t_ast	*root_node;
+	t_ast	*cmd_node;
+	t_ast	*redir_node;
 
 	(void)tokens;
 	av_ls = (char **)malloc(sizeof(char *) * 3);
@@ -49,9 +55,11 @@ t_ast	*built_ast(t_token *tokens)
 	av_ls[1] = ft_strdup("-l");
 	av_ls[2] = NULL;
 	cmd_content = new_cmd_content(av_ls);
-	if (!cmd_content)
+	cmd_node = new_ast_node(NODE_CMD, NULL, NULL, cmd_content);
+	if (!cmd_node)
 		return (NULL);
-	root_node = new_ast_node(NODE_CMD, NULL, NULL, cmd_content);
-	printf("--- DEBUG: AST para 'ls -l' criada manualmente ---\n");
-	return (root_node);
+	redir_node = new_redir_node(cmd_node, REDIR_OUT, "output.txt");
+	if (!redir_node)
+		return (cmd_node);
+	return (redir_node);
 }

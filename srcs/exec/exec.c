@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 02:36:20 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/22 11:44:10 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 11:44:49 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,8 @@ int	execute_ast(t_ast *root, t_env_table *env)
 
 static void	exec_child(char *path_cmd, char **av, t_env_table *env)
 {
-	execve(path_cmd, av, env_export(env));
-	ft_putstr_fd("Minishell: ", 2);
-	ft_putstr_fd(av[0], 2);
-	if (errno == ENOENT)
-		ft_putstr_fd(": command not found\n", 2);
-	else
-	{
-		ft_putstr_fd(": ", 2);
-		perror("");
-	}
+	execve(path_cmd, av, envp);
+	perror("Minishell\n");
 	exit(127);
 }
 
