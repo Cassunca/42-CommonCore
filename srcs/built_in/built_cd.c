@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 13:48:48 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/17 23:18:53 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/18 17:43:00 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,12 +145,12 @@ static void	cd_home(t_env_table *env)
 	free(old_pwd);
 }
 
-void	cd(t_env_table *env, char *path)
+void	cd(t_env_table *env, t_cmd *cmd)
 {
-	if (!path || !ft_strcmp(path, "~"))
+	if (!cmd->argv[1] || !ft_strcmp(cmd->argv[1], "~"))
 		cd_home(env);
-	else if (!ft_strcmp(path, "-"))
+	else if (!ft_strcmp(cmd->argv[1], "-"))
 		cd_dash(env);
 	else
-		cd_path(env, path);
+		cd_path(env, cmd->argv[1]);
 }
