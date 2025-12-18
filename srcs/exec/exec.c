@@ -6,7 +6,7 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 02:36:20 by cassunca          #+#    #+#             */
-/*   Updated: 2025/12/11 06:09:11 by cassunca         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:23:06 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	execute_ast(t_ast *root, char **envp)
 		return (0);
 	// if (root->type == NODE_PIPE)
 	// 	return (handle_pipe(root, envp));
-	// if (root->type == NODE_REDIR)
-	// 	return (handle_redir(root, envp));
+	if (root->type == NODE_REDIR)
+		return (handle_redirect(root, envp));
 	if (root->type == NODE_CMD)
 		return (execute_cmd(root, envp));
 	// if (root->type == NODE_AND)
@@ -32,7 +32,15 @@ int	execute_ast(t_ast *root, char **envp)
 void	exec_child(char *path_cmd, char **av, char **envp)
 {
 	execve(path_cmd, av, envp);
-	perror("Minishell\n");
+	ft_putstr_fd("Minishell: ", 2);
+	ft_putstr_fd(av[0], 2);
+	if (errno == ENOENT)
+		ft_putstr_fd(": command not found\n", 2);
+	else
+	{
+		ft_putstr_fd(": ", 2);
+		perror("");
+	}
 	exit(127);
 }
 
