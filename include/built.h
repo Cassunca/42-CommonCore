@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 13:00:29 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/05 16:21:16 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/18 16:12:32 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # include "minishell.h"
 
 typedef struct s_env_table	t_env_table;
+typedef struct s_cmd		t_cmd;
 
 void	print_env(t_env_table *env);
 void	cd(t_env_table *env, char *path);
 void	export(t_env_table *env, char *key_value);
 void	unset(t_env_table *env, char *key);
-void	echo(t_env_table *env, char *flag, char *line);
+void	echo(t_env_table *env, t_cmd *cmd);
 void	pwd(void);
 
 #endif
