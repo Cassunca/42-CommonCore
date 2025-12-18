@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 16:28:05 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/05 16:44:19 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/18 17:53:28 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	export(t_env_table *env, char *key_value)
 	// refatory the code baby :{
 	if (!key_value)
 	{
-		print_env(env);
+		print_env(env, NULL);
 		return ;
 	}
 	split = ft_split(key_value, '=');

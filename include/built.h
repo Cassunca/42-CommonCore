@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 13:00:29 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/18 17:25:48 by amyrodri         ###   ########.fr       */
+/*   Updated: 2025/12/18 17:46:32 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 typedef struct s_env_table	t_env_table;
 typedef struct s_cmd		t_cmd;
 
-void	print_env(t_env_table *env);
+void	print_env(t_env_table *env, t_cmd *cmd);
 void	cd(t_env_table *env, t_cmd *path);
 void	export(t_env_table *env, char *key_value);
 void	unset(t_env_table *env, char *key);
