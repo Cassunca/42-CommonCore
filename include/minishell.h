@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/08 11:24:55 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/08 11:25:48 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "lexer.h"
 # include "utils.h"
 # include "parser.h"
+# include "colors.h"
 # include "prompt.h"
 
 # include <stdio.h>
