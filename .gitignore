@@ -1,6 +1,9 @@
 # exec
 minishell
 
+# config
+.minishellrc
+
 # Prerequisites
 *.d
 
