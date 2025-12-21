@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 10:15:14 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/21 10:27:18 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/21 10:48:53 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,21 @@ char	*cwd_with_tilde(t_env_table *env)
 	return (cwd);
 }
 
+char	*color_sla(char	*color, char *s)
+{
+	char	*tmp;
+	char	*result;
+
+	if (!color || !s)
+		return (NULL);
+	tmp = ft_strjoin(color, s);
+	if (!tmp)
+		return (NULL);
+	result = ft_strjoin(tmp, RESET);
+	free(tmp);
+	return (result);
+}
+
 void	prompt_default(t_env_table *env)
 {
 	char	*user;
@@ -46,9 +61,8 @@ void	prompt_default(t_env_table *env)
 	user = env_get(env, "USER");
 	if (!user)
 		user = "minishell";
-
-	cwd = cwd_with_tilde(env);
-	tmp = ft_strjoin(user, "@minishell:");
+	tmp = color_sla(B_MAGENTA, ft_strjoin(user, "@minishell:"));
+	cwd = color_sla(B_CYAN, cwd_with_tilde(env));
 	ps1 = ft_strjoin(tmp, cwd);
 	free(tmp);
 	tmp = ft_strjoin(ps1, " ❯ ");
