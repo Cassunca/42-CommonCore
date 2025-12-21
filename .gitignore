@@ -2,7 +2,7 @@
 minishell
 
 # config
-.minishellrc
+.minishellrc*
 
 # Prerequisites
 *.d
