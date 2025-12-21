@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_default.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 10:15:14 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/06 18:46:37 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/13 16:06:38 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*cwd_with_tilde(t_env_table *env)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		return (ft_strdup("~"));
+		return ("~");
 	home = env_get(env, "HOME");
 	if (!home)
 		return (cwd);
@@ -36,21 +36,6 @@ char	*cwd_with_tilde(t_env_table *env)
 	return (cwd);
 }
 
-static char	*colorize_string(char	*color, char *s)
-{
-	char	*tmp;
-	char	*result;
-
-	if (!color || !s)
-		return (NULL);
-	tmp = ft_strjoin(color, s);
-	if (!tmp)
-		return (NULL);
-	result = ft_strjoin(tmp, RESET);
-	free(tmp);
-	return (result);
-}
-
 void	prompt_default(t_env_table *env)
 {
 	char	*user;
@@ -61,8 +46,9 @@ void	prompt_default(t_env_table *env)
 	user = env_get(env, "USER");
 	if (!user)
 		user = "minishell";
-	tmp = colorize_string(B_MAGENTA, ft_strjoin(user, "@minishell:"));
-	cwd = colorize_string(B_CYAN, cwd_with_tilde(env));
+
+	cwd = cwd_with_tilde(env);
+	tmp = ft_strjoin(user, "@minishell:");
 	ps1 = ft_strjoin(tmp, cwd);
 	free(tmp);
 	tmp = ft_strjoin(ps1, " ❯ ");

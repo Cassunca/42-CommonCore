@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 22:56:28 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/21 00:44:02 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/21 10:16:44 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,13 @@ char	*parse_ps1(char	*line)
 void	init_ps1(t_env_table *env)
 {
 	char	*ps1;
-	char	*user;
 	int		fd;
 
 	if (env_get(env, "PS1"))
 		return ;
 	fd = open(".minishellrc", O_RDONLY);
 	if (fd == -1)
-	{
-		user = env_get(env, "USER");
-		if (!user)
-			user = "minishell";
-		ps1 = ft_strjoin(user, ">_ ");
-		env_set(env, "PS1", ps1);
-		free(ps1);
-		return ;
-	}
+		return (prompt_default(env));
 	char	*line;
 	while (1)
 	{
