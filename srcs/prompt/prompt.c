@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 22:56:28 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/21 00:32:24 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/21 00:44:02 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ void	init_ps1(t_env_table *env)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
+		if (!ft_strncmp(line, "#", 1))
+		{
+			free(line);
+			continue ;
+		}
 		if (!ft_strncmp(line, "PROMPT=", 7))
 		{
 			ps1 = parse_ps1(line);
