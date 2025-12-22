@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 22:56:28 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/22 01:05:39 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/22 01:11:36 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,8 @@ char	*interpret_vars(t_env_table *env, char *s)
 			}
 			while (*val)
 				res[j++] = *val++;
-			if (s[i - 1] == 'd' && (i >= 2 && ft_isdigit(s[i - 2])))
-				free(val);
+			// if (s[i - 1] == 'd' && (i >= 2 && ft_isdigit(s[i - 2])))
+			// 	free(val);
 		}
 		else
 			res[j++] = s[i++];
