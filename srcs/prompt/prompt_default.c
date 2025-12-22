@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 10:15:14 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/21 10:48:53 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/21 23:21:22 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*cwd_with_tilde(t_env_table *env)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		return ("~");
+		return (ft_strdup("~"));
 	home = env_get(env, "HOME");
 	if (!home)
 		return (cwd);
