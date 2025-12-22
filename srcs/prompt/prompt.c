@@ -6,11 +6,54 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 22:56:28 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/21 13:13:53 by kamys            ###   ########.fr       */
+/*   Updated: 2025/12/22 01:05:39 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prompt.h"
+
+char	*cwd_tail(char *cwd, int depth)
+{
+	char	*p;
+
+	if (!cwd || depth <= 0)
+		return (cwd);
+	p = cwd + ft_strlen(cwd);
+	while (p > cwd && depth > 0)
+	{
+		p--;
+		if (*p == '/')
+		{
+			depth--;
+		}
+	}
+	if (p <= cwd)
+	{
+		return (cwd);
+	}
+	return (p + 1);
+}
+
+char	*expand_cwd(char limit)
+{
+	char	*cwd;
+	char	*tail;
+	char	*res;
+	int		depth;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (ft_strdup("~"));
+	depth = ft_atoi(&limit);
+	if (depth < 1)
+		depth = 1;
+	if (depth > 9)
+		depth = 9;
+	tail = cwd_tail(cwd, depth);
+	res = ft_strdup(tail);
+	free(cwd);
+	return (res);
+}
 
 char	*interpret_escapes(char *s)
 {
@@ -25,10 +68,11 @@ char	*interpret_escapes(char *s)
 	j = 0;
 	while (s[i])
 	{
-		if (s[i] == '\\' && s[i + 1] == 'x'
-			&& s[i + 2] == '1' && s[i + 3] == 'b')
+		if (!ft_strncmp(&s[i], "\\x1b", 4))
 		{
+			res[j++] = '\001';
 			res[j++] = 27;
+			res[j++] = '\002';
 			i += 4;
 		}
 		else
@@ -57,6 +101,11 @@ static size_t	prompt_len(t_env_table *env, char *s)
 			len += ft_strlen(cwd_with_tilde(env));
 			i += 2;
 		}
+		else if (s[i] == '%' && ft_isdigit(s[i + 1]) && s[i + 2] == 'd')
+		{
+			len += ft_strlen(expand_cwd(s[i]));
+			i += 3;
+		}
 		else
 		{
 			len++;
@@ -81,9 +130,20 @@ char	*interpret_vars(t_env_table *env, char *s)
 		if (s[i] == '%' && s[i + 1])
 		{
 			if (s[i + 1] == 'u')
+			{
 				val = env_get(env, "USER");
+				i += 2;
+			}
 			else if (s[i + 1] == 'd')
+			{
 				val = cwd_with_tilde(env);
+				i += 2;
+			}
+			else if (ft_isdigit(s[i + 1]) && s[i + 2] == 'd')
+			{
+				val = expand_cwd(s[i + 1]);
+				i += 3;
+			}
 			else
 			{
 				res[j++] = s[i++];
@@ -91,7 +151,8 @@ char	*interpret_vars(t_env_table *env, char *s)
 			}
 			while (*val)
 				res[j++] = *val++;
-			i += 2;
+			if (s[i - 1] == 'd' && (i >= 2 && ft_isdigit(s[i - 2])))
+				free(val);
 		}
 		else
 			res[j++] = s[i++];
@@ -114,7 +175,6 @@ char	*parse_ps1(t_env_table *env, char *line)
 	if (!escaped)
 		return (NULL);
 	final = interpret_vars(env, escaped);
-	free(escaped);
 	return (final);
 }
 
