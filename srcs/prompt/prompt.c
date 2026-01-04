@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 22:56:28 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/22 01:11:36 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/04 12:44:51 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static size_t	prompt_len(t_env_table *env, char *s)
 		}
 		else if (s[i] == '%' && ft_isdigit(s[i + 1]) && s[i + 2] == 'd')
 		{
-			len += ft_strlen(expand_cwd(s[i]));
+			len += ft_strlen(expand_cwd(s[i + 1]));
 			i += 3;
 		}
 		else
