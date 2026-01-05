@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 16:28:05 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/18 17:53:28 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:30:29 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,59 @@
 **
 */
 
+static int	hash_len(t_env_table *table)
+{
+	size_t	count;
+	size_t	i;
+	t_env	*curr;
+
+	count = 0;
+	i = 0;
+	while (i < table->size)
+	{
+		curr = table->buckets[i++];
+		while (curr)
+		{
+			count++;
+			curr = curr->next;
+		}
+	}
+	return (count);
+}
+
+// static void	add_array(char **order, char *key, char *value)
+// {
+	
+// }
+
 void	export(t_env_table *env, char *key_value)
 {
 	char	**split;
 	char	*key;
 	char	*value;
-	// refatory the code baby :{
+
 	if (!key_value)
 	{
-		print_env(env, NULL);
+		size_t	i;
+		t_env	*curr;
+		char	**order;
+
+		order = malloc(sizeof(char *) * hash_len(env) + 1);
+		i = 0;
+		while (i < env->size)
+		{
+			curr = env->buckets[i++];
+			while (curr)
+			{
+				add_array(order, curr->key, curr->value);
+				curr = curr->next;
+			}
+		}
+		order[i + 1] = NULL;
+		order_array(order);
+		i = 0;
+		while (order[i])
+			printf("declare -x %s", order[i++]);
 		return ;
 	}
 	split = ft_split(key_value, '=');
