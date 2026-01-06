@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 16:28:05 by amyrodri          #+#    #+#             */
-/*   Updated: 2026/01/05 17:30:29 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/06 12:45:52 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,134 @@ static int	hash_len(t_env_table *table)
 	return (count);
 }
 
-// static void	add_array(char **order, char *key, char *value)
-// {
-	
-// }
+static char	*ft_strjoin3(char *s1, char *s2, char *s3)
+{
+	size_t	len1;
+	size_t	len2;
+	size_t	len3;
+	char	*new_str;
+
+	len1 = 0;
+	len2 = 0;
+	len3 = 0;
+	if (s1)
+		len1 = ft_strlen(s1);
+	if (s2)
+		len2 = ft_strlen(s2);
+	if (s3)
+		len3 = ft_strlen(s3);
+	new_str = malloc(len1 + len2 + len3 + 1);
+	if (!new_str)
+		return (NULL);
+	if (s1)
+		ft_memcpy(new_str, s1, len1);
+	if (s2)
+		ft_memcpy(new_str + len1, s2, len2);
+	if (s3)
+		ft_memcpy(new_str + len1 + len2, s3, len3);
+	new_str[len1 + len2 + len3] = '\0';
+	return (new_str);
+}
+
+static int	key_len(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	return (i);
+}
+
+static int	key_cmp(const char *s1, const char *s2)
+{
+	int	i;
+	int	len1;
+	int	len2;
+
+	i = 0;
+	len1 = key_len(s1);
+	len2 = key_len(s2);
+	while (i < len1 && i < len2)
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (len1 - len2);
+}
+
+static void	order_array(char **array)
+{
+	int		i;
+	int		j;
+	char	*key;
+
+	i = 1;
+	while (array[i])
+	{
+		key = array[i];
+		j = i - 1;
+		while (j >= 0 && key_cmp(array[i], key) > 0)
+		{
+			array[j + 1] = array[i];
+			j--;
+		}
+		array[j + 1] = key;
+		i++;
+	}
+}
+
+static void	print_export(char **order)
+{
+	int		i;
+	char	*eq;
+
+	i = 0;
+	while (order[i])
+	{
+		write(1, "declare -x ", 11);
+		eq = ft_strchr(order[i], '=');
+		if (eq)
+		{
+			write(1, order[i], eq - order[i]);
+			write(1, "=\"", 2);
+			write(1, eq + 1, ft_strlen(eq) + 1);
+			write(1, "\"\n", 2);
+		}
+		else
+		{
+			write(1, order[i], ft_strlen(order[i]));
+			write(1, "\n", 1);
+		}
+		i++;
+	}
+}
+
+void display_export(t_env_table *env)
+{
+	size_t	i;
+	size_t	j;
+	t_env	*curr;
+	char	**order;
+
+	order = malloc(sizeof(char *) * hash_len(env) + 1);
+	i = 0;
+	j = 0;
+	while (i < env->size)
+	{
+		curr = env->buckets[i];
+		while (curr)
+		{
+			order[j++] = ft_strjoin3(curr->key, "=", curr->value);
+			curr = curr->next;
+		}
+		i++;
+	}
+	order[j] = NULL;
+	order_array(order);
+	print_export(order);
+}
 
 void	export(t_env_table *env, char *key_value)
 {
@@ -107,29 +231,7 @@ void	export(t_env_table *env, char *key_value)
 	char	*value;
 
 	if (!key_value)
-	{
-		size_t	i;
-		t_env	*curr;
-		char	**order;
-
-		order = malloc(sizeof(char *) * hash_len(env) + 1);
-		i = 0;
-		while (i < env->size)
-		{
-			curr = env->buckets[i++];
-			while (curr)
-			{
-				add_array(order, curr->key, curr->value);
-				curr = curr->next;
-			}
-		}
-		order[i + 1] = NULL;
-		order_array(order);
-		i = 0;
-		while (order[i])
-			printf("declare -x %s", order[i++]);
-		return ;
-	}
+		return (display_export(env));
 	split = ft_split(key_value, '=');
 	if (!split || !split[0] || !split[1])
 		return ;
