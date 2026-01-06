@@ -62,7 +62,11 @@ SRCS_PARSER = parser.c				\
 			  parse_sequence.c		\
 			  parse_subshell.c		
 
-SRCS_PROMPT	= prompt.c				\
+SRCS_PROMPT	= prompt_init.c			\
+			  prompt_expand.c		\
+			  prompt_utils.c		\
+			  prompt_len.c			\
+			  prompt_parser.c		\
 			  prompt_default.c
 
 # Add directory prefix
