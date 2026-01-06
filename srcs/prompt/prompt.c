@@ -6,13 +6,13 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 22:56:28 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/04 12:44:51 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/06 18:28:24 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prompt.h"
 
-char	*cwd_tail(char *cwd, int depth)
+static char	*cwd_tail(char *cwd, int depth)
 {
 	char	*p;
 
@@ -23,18 +23,14 @@ char	*cwd_tail(char *cwd, int depth)
 	{
 		p--;
 		if (*p == '/')
-		{
 			depth--;
-		}
 	}
 	if (p <= cwd)
-	{
 		return (cwd);
-	}
 	return (p + 1);
 }
 
-char	*expand_cwd(char limit)
+static char	*expand_cwd(char limit)
 {
 	char	*cwd;
 	char	*tail;
@@ -55,7 +51,7 @@ char	*expand_cwd(char limit)
 	return (res);
 }
 
-char	*interpret_escapes(char *s)
+static char	*interpret_escapes(char *s)
 {
 	char	*res;
 	int		i;
@@ -82,40 +78,68 @@ char	*interpret_escapes(char *s)
 	return (res);
 }
 
+static char	*resolve_prompt_token(t_env_table *env, char *s, int *i)
+{
+	char	*val;
+
+	val = NULL;
+	if (s[*i + 1] == 'u')
+	{
+		val = env_get(env, "USER");
+		*i += 2;
+	}
+	else if (s[*i + 1] == 'd')
+	{
+		val = cwd_with_tilde(env);
+		*i += 2;
+	}
+	else if (ft_isdigit(s[*i + 1]) && s[*i + 2] == 'd')
+	{
+		val = expand_cwd(s[*i + 1]);
+		*i += 3;
+	}
+	return (val);
+}
+
 static size_t	prompt_len(t_env_table *env, char *s)
 {
 	size_t	len;
+	char	*val;
 	int		i;
 
 	len = 0;
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '%' && s[i + 1] == 'u')
+		if (s[i] == '%' && s[i + 1])
 		{
-			len += ft_strlen(env_get(env, "USER"));
-			i += 2;
+			val = resolve_prompt_token(env, s, &i);
+			if (val)
+			{
+				len += ft_strlen(val);
+				if (val != env_get(env, "USER"))
+					free(val);
+				continue ;
+			}
 		}
-		else if (s[i] == '%' && s[i + 1] == 'd')
-		{
-			len += ft_strlen(cwd_with_tilde(env));
-			i += 2;
-		}
-		else if (s[i] == '%' && ft_isdigit(s[i + 1]) && s[i + 2] == 'd')
-		{
-			len += ft_strlen(expand_cwd(s[i + 1]));
-			i += 3;
-		}
-		else
-		{
-			len++;
-			i++;
-		}
+		len++;
+		i++;
 	}
 	return (len);
 }
 
-char	*interpret_vars(t_env_table *env, char *s)
+static void	append_prompt_value(t_env_table *env, char **val, char **res, int *j)
+{
+	char	*p;
+
+	p = *val;
+	while (*p)
+		(*res)[(*j)++] = *p++;
+	if (*val != env_get(env, "USER"))
+		free(*val);
+}
+
+static char	*interpret_vars(t_env_table *env, char *s)
 {
 	char	*res;
 	char	*val;
@@ -123,51 +147,41 @@ char	*interpret_vars(t_env_table *env, char *s)
 	int		j;
 
 	res = malloc(prompt_len(env, s) + 1);
+	if (!res)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (s[i])
 	{
 		if (s[i] == '%' && s[i + 1])
 		{
-			if (s[i + 1] == 'u')
+			val = resolve_prompt_token(env, s, &i);
+			if (val)
 			{
-				val = env_get(env, "USER");
-				i += 2;
-			}
-			else if (s[i + 1] == 'd')
-			{
-				val = cwd_with_tilde(env);
-				i += 2;
-			}
-			else if (ft_isdigit(s[i + 1]) && s[i + 2] == 'd')
-			{
-				val = expand_cwd(s[i + 1]);
-				i += 3;
-			}
-			else
-			{
-				res[j++] = s[i++];
+				append_prompt_value(env, &val, &res, &j);
 				continue ;
 			}
-			while (*val)
-				res[j++] = *val++;
-			// if (s[i - 1] == 'd' && (i >= 2 && ft_isdigit(s[i - 2])))
-			// 	free(val);
 		}
-		else
-			res[j++] = s[i++];
+		res[j++] = s[i++];
 	}
 	res[j] = '\0';
 	return (res);
 }
 
-char	*parse_ps1(t_env_table *env, char *line)
+static char	*skip_whitespace(char *s)
+{
+	while (*s && ft_isspace(*s))
+		s++;
+	return (s);
+}
+
+static char	*parse_ps1(t_env_table *env, char *line)
 {
 	char	*raw;
 	char	*escaped;
 	char	*final;
 
-	raw = ft_strtrim(line + 7, "\"\n");
+	raw = ft_strtrim(skip_whitespace(line) + 7, "\"\n");
 	if (!raw)
 		return (NULL);
 	escaped = interpret_escapes(raw);
@@ -175,42 +189,62 @@ char	*parse_ps1(t_env_table *env, char *line)
 	if (!escaped)
 		return (NULL);
 	final = interpret_vars(env, escaped);
+	free(escaped);
 	return (final);
 }
 
-void	init_ps1(t_env_table *env)
+static int	handle_ps1(t_env_table *env, char *line)
 {
+	char	*trim;
 	char	*ps1;
-	int		fd;
 
-	if (env_get(env, "PS1"))
-		return ;
+	trim = skip_whitespace(line);
+	if (*trim == '#' || *trim == '\0')
+		return (0);
+	if (!ft_strncmp(trim, "PROMPT=", 7))
+	{
+		ps1 = parse_ps1(env, line);
+		if (ps1)
+		{
+			env_set(env, "PS1", ps1);
+			free(ps1);
+		}
+		return (1);
+	}
+	return (0);
+}
+
+static int	load_rc(t_env_table *env)
+{
+	int		fd;
+	char	*line;
+
 	fd = open(".minishellrc", O_RDONLY);
 	if (fd == -1)
-		return (prompt_default(env));
-	char	*line;
+		return (0);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (!ft_strncmp(line, "#", 1))
+		if (handle_ps1(env, line))
 		{
 			free(line);
-			continue ;
-		}
-		if (!ft_strncmp(line, "PROMPT=", 7))
-		{
-			ps1 = parse_ps1(env, line);
-			env_set(env, "PS1", ps1);
-			free(line);
-			free(ps1);
 			close(fd);
-			return ;
+			return (1);
 		}
 		free(line);
 	}
 	close(fd);
+	return (0);
+}
+
+void	init_ps1(t_env_table *env)
+{
+	if (env_get(env, "PS1"))
+		return ;
+	if (!load_rc(env))
+		prompt_default(env);
 }
 
 char	*get_prompt(t_env_table *env)
