@@ -6,74 +6,11 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 16:28:05 by amyrodri          #+#    #+#             */
-/*   Updated: 2026/01/06 12:45:52 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/06 15:10:37 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built.h"
-
-/*
-** TODO - Implementar export corretamente (padrão Bash)
-**
-** Regras Gerais:
-**  - Se não houver argumentos -> imprimir todas variáveis exportadas
-**    - Impressão deve ser em ordem alfabética
-**    - Formato: declare -x KEY="VALUE"
-**      * Se a variável não tem valor -> apenas: declare -x KEY
-**
-** Parsing / Validação:
-**  - Verificar se o identificador é válido antes do '='
-**    * Deve começar com letra ou '_'
-**    * Pode conter números após o primeiro caractere
-**    * Sem caracteres especiais como: - + / @ ! ? etc.
-**    * Se inválido -> imprimir erro:
-**        export: `argumento': not a valid identifier
-**
-** Manipulação de Variáveis:
-**  - Suportar definições simples:
-**      export KEY=VALUE
-**
-**  - Suportar variáveis sem '=':
-**      export KEY
-**      * Apenas marcar como exportada, sem alterar valor existente
-**
-**  - Suportar concatenação com '+=':
-**      export KEY+=VALUE
-**      * Se KEY já existe:
-**          NOVO_VALOR = VALOR_ANTIGO + VALUE
-**      * Se não existe:
-**          KEY=VALUE (mesmo comportamento do Bash)
-**
-**  - Suportar múltiplos argumentos:
-**      export A=1 B=2 C+=3 VAR
-**
-** Casos Especiais / Edge Cases:
-**  - KEY=VALUE com vários '=' no valor:
-**      export VAR=a=b=c
-**      * O valor deve ser "a=b=c" sem quebrar errado no split
-**
-**  - Não sobrescrever valor antigo quando apenas exportado:
-**      VAR=old -> export VAR -> não muda
-**
-**  - Atualizar corretamente o ambiente interno (env_set)
-**    * Se já existir -> atualizar valor apenas se tiver '='
-**
-** Memória:
-**  - Liberar corretamente arrays e strings usadas no split
-**  - Evitar vazamento em qualquer retorno antecipado
-**
-** Erros:
-**  - Não interromper parsing ao encontrar um erro
-**    * Apenas printar erro e continuar nos próximos argumentos
-**
-** Exemplos que devem funcionar:
-**  export       -> lista variáveis
-**  export A     -> marca A como exportada
-**  export A=1   -> define A e exporta
-**  export A+=2  -> concatena
-**  export 2A=3  -> erro de identificador
-**
-*/
 
 static int	hash_len(t_env_table *table)
 {
@@ -163,9 +100,9 @@ static void	order_array(char **array)
 	{
 		key = array[i];
 		j = i - 1;
-		while (j >= 0 && key_cmp(array[i], key) > 0)
+		while (j >= 0 && key_cmp(array[j], key) > 0)
 		{
-			array[j + 1] = array[i];
+			array[j + 1] = array[j];
 			j--;
 		}
 		array[j + 1] = key;
@@ -206,7 +143,7 @@ void display_export(t_env_table *env)
 	t_env	*curr;
 	char	**order;
 
-	order = malloc(sizeof(char *) * hash_len(env) + 1);
+	order = malloc(sizeof(char *) * (hash_len(env) + 1));
 	i = 0;
 	j = 0;
 	while (i < env->size)
@@ -224,18 +161,102 @@ void display_export(t_env_table *env)
 	print_export(order);
 }
 
-void	export(t_env_table *env, char *key_value)
+static int	is_valid_key(char *s)
 {
-	char	**split;
+	int	i;
+
+	if (!s || (!ft_isalpha(s[0]) && s[0] != '_'))
+		return (0);
+	i = 1;
+	while (s[i] && s[i] != '=')
+	{
+		if (s[i] == '+' || s[i + 1] == '+')
+			return (1);
+		if (!ft_isalnum(s[i]) && s[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static int	is_append(char *s)
+{
+	char	*eq;
+
+	eq = ft_strchr(s, '=');
+	if (eq && eq > s && *(eq - 1) == '+')
+		return (1);
+	return (0);
+}
+
+static void	parse_export(char *s, char **key, char **value, int append)
+{
+	char	*eq;
+
+	eq = ft_strchr(s, '=');
+	if (!eq)
+	{
+		*key = ft_strdup(s);
+		*value = NULL;
+		return ;
+	}
+	*key = ft_substr(s, 0, eq - s - append);
+	*value = ft_strdup(eq + 1);
+}
+
+static void apply_export(t_env_table *env, char *key, char *value, int append)
+{
+	char	*old;
+	char	*new;
+
+	if (!append)
+		return (env_set(env, key, value));
+	old = env_get(env, key);
+	if (!old)
+		return (env_set(env, key, value));
+	if (!value || !*value)
+		return ;
+	new = ft_strjoin(old, value);
+	env_set(env, key, new);
+	free(new);
+}
+
+static void	handle_export(t_env_table *env, char *s)
+{
 	char	*key;
 	char	*value;
+	int		append;
 
-	if (!key_value)
-		return (display_export(env));
-	split = ft_split(key_value, '=');
-	if (!split || !split[0] || !split[1])
+	append = is_append(s);
+	parse_export(s, &key, &value, append);
+	if (!is_valid_key(key))
+	{
+		ft_putstr_fd("export: ", 2);
+		ft_putstr_fd(key, 2);
+		ft_putstr_fd(": not a valid identifier\n", 2);
+		free(key);
+		free(value);
 		return ;
-	key = split[0];
-	value = split[1];
-	env_set(env, key, value);
+	}
+	if (!ft_strchr(s, '='))
+	{
+		if (!env_get(env, key))
+			env_set(env, key, ft_strdup(""));
+		free(key);
+		return ;
+	}
+	apply_export(env, key, value, append);
+	free(key);
+	free(value);
+}
+
+void	export(t_env_table *env, t_cmd *cmd)
+{
+	int	i;
+
+	i = 1;
+	if (!cmd->argv[i])
+		return (display_export(env));
+	while (cmd->argv[i])
+		handle_export(env, cmd->argv[i++]);
 }
