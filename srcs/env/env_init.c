@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:07:16 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/11/25 13:59:16 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/08 15:12:16 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	env_destroy(t_env_table *table)
 {
 	size_t	i;
 	t_env	*curr;
+	t_env	*next;
 
 	i = 0;
 	while (i < table->size)
@@ -62,11 +63,12 @@ void	env_destroy(t_env_table *table)
 		curr = table->buckets[i];
 		while (curr)
 		{
+			next = curr->next;
 			free(curr->key);
 			free(curr->value);
-			curr = curr->next;
+			free(curr);
+			curr = next;
 		}
-		free(curr);
 		i++;
 	}
 	free(table->buckets);

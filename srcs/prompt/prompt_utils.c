@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 22:56:28 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/08 13:09:16 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/08 15:07:19 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*expand_cwd(char limit)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (ft_strdup("~"));
-	depth = ft_atoi(&limit);
+	depth = limit - '0';
 	if (depth < 1)
 		depth = 1;
 	if (depth > 9)

@@ -1,6 +1,23 @@
 {
-   ignore_libreadline_memory_errors
+   readline_and_tinfo_reachable
    Memcheck:Leak
+   match-leak-kinds: reachable
    ...
    obj:*/libreadline.so.*
+}
+
+{
+   history_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libhistory.so.*
+}
+
+{
+   tinfo_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libtinfo.so.*
 }
