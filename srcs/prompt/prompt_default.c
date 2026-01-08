@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 10:15:14 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/06 18:46:37 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/08 13:02:06 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,39 +36,13 @@ char	*cwd_with_tilde(t_env_table *env)
 	return (cwd);
 }
 
-static char	*colorize_string(char	*color, char *s)
-{
-	char	*tmp;
-	char	*result;
-
-	if (!color || !s)
-		return (NULL);
-	tmp = ft_strjoin(color, s);
-	if (!tmp)
-		return (NULL);
-	result = ft_strjoin(tmp, RESET);
-	free(tmp);
-	return (result);
-}
-
 void	prompt_default(t_env_table *env)
 {
-	char	*user;
-	char	*cwd;
-	char	*tmp;
 	char	*ps1;
 
-	user = env_get(env, "USER");
-	if (!user)
-		user = "minishell";
-	tmp = colorize_string(B_MAGENTA, ft_strjoin(user, "@minishell:"));
-	cwd = colorize_string(B_CYAN, cwd_with_tilde(env));
-	ps1 = ft_strjoin(tmp, cwd);
-	free(tmp);
-	tmp = ft_strjoin(ps1, " ❯ ");
-	free(ps1);
-	ps1 = tmp;
+	ps1 = "\x1b[01;31m%u"
+		"\x1b[01;37m:"
+		"\x1b[01;34m%d"
+		"\x1b[01;37m > \x1b[0m";
 	env_set(env, "PS1", ps1);
-	free(ps1);
-	free(cwd);
 }

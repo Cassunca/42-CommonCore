@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:38:02 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/06 18:45:25 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/08 12:41:27 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*interpret_escapes(char *s)
 	int		i;
 	int		j;
 
-	res = malloc(ft_strlen(s) + 1);
+	res = malloc(ft_strlen(s) * 3 + 1);
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -48,15 +48,10 @@ static char	*interpret_escapes(char *s)
 
 char	*parse_ps1(t_env_table *env, char *line)
 {
-	char	*raw;
 	char	*escaped;
 	char	*final;
 
-	raw = ft_strtrim(skip_whitespace(line) + 7, "\"\n");
-	if (!raw)
-		return (NULL);
-	escaped = interpret_escapes(raw);
-	free(raw);
+	escaped = interpret_escapes(line);
 	if (!escaped)
 		return (NULL);
 	final = interpret_vars(env, escaped);

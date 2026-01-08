@@ -6,11 +6,21 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:36:21 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/06 18:37:22 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/08 12:46:02 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prompt.h"
+
+static char	*extract_ps1_raw(char *line)
+{
+	char	*raw;
+
+	raw = ft_strtrim(skip_whitespace(line) + 7, "\"\n");
+	if (!raw)
+		return (NULL);
+	return (raw);
+}
 
 static int	handle_ps1(t_env_table *env, char *line)
 {
@@ -22,7 +32,7 @@ static int	handle_ps1(t_env_table *env, char *line)
 		return (0);
 	if (!ft_strncmp(trim, "PROMPT=", 7))
 	{
-		ps1 = parse_ps1(env, line);
+		ps1 = extract_ps1_raw(line);
 		if (ps1)
 		{
 			env_set(env, "PS1", ps1);
@@ -72,6 +82,6 @@ char	*get_prompt(t_env_table *env)
 
 	ps1 = env_get(env, "PS1");
 	if (!ps1)
-		return ("minishell$ ");
-	return (ps1);
+		return (ft_strdup(WHITE BOLD "$ " RESET));
+	return (parse_ps1(env, ps1));
 }

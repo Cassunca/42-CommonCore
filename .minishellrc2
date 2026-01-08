@@ -1,7 +1,0 @@
-PROMPT="✨\x1b[97m%u\x1b[0m:\x1b[96m%1d/\x1b[0m >_ "
-
-# PROMPT="%u >"
-# PROMPT="%d >"
-# PROMPT="%1d >"
-# PROMPT="%9d > "
-
