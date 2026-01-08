@@ -104,9 +104,35 @@ SRCS_ALIAS	= alias_init.c			\
 SRCS_EXEC	= exec.c				\
 			  exec_cmd.c			\
 			  exec_redirect.c		\
-			  stub.c				\
+			  exec_pipe.c			\
+			  exec_and.c			\
+			  exec_or.c				\
+			  exec_path.c			\
 			  exec_utils.c			\
-			  tester.c
+			  exec_heredoc.c		\
+			  exec_heredoc_utils.c	\
+			  exec_heredoc_utils2.c\
+
+SRCS_PROMPT	= prompt_init.c			\
+			  prompt_expand.c		\
+			  prompt_utils.c		\
+			  prompt_len.c			\
+			  prompt_parser.c		
+
+SRCS_EXPAND	= expand_ast.c			\
+			  expand_alias.c		\
+			  expand_cmd.c			\
+			  expand_quotes.c		\
+			  expand_redir.c		\
+			  expand_tilde.c		\
+			  expand_utils.c		\
+			  expand_vars.c			\
+			  expand_word.c
+
+SRCS_ALIAS	= alias_init.c			\
+			  alias_export.c		\
+			  alias_new.c			\
+			  alias_table.c					
 
 # Add directory prefix
 SRCS_ALIAS	:= $(addprefix $(SRCSDIR)/$(ALIASDIR)/, $(SRCS_ALIAS))
