@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:39:55 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/06 18:47:04 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/08 17:01:48 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*resolve_prompt_token(t_env_table *env, char *s, int *i)
 	}
 	else if (ft_isdigit(s[*i + 1]) && s[*i + 2] == 'd')
 	{
-		val = expand_cwd(s[*i + 1]);
+		val = expand_cwd(env, s[*i + 1]);
 		*i += 3;
 	}
 	return (val);

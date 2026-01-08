@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 22:56:28 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/08 15:07:19 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/08 17:01:41 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,6 @@ static char	*cwd_tail(char *cwd, int depth)
 	if (p <= cwd)
 		return (cwd);
 	return (p + 1);
-}
-
-char	*expand_cwd(char limit)
-{
-	char	*cwd;
-	char	*tail;
-	char	*res;
-	int		depth;
-
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return (ft_strdup("~"));
-	depth = limit - '0';
-	if (depth < 1)
-		depth = 1;
-	if (depth > 9)
-		depth = 9;
-	tail = cwd_tail(cwd, depth);
-	res = ft_strdup(tail);
-	free(cwd);
-	return (res);
 }
 
 char	*cwd_with_tilde(t_env_table *env)
@@ -73,6 +52,25 @@ char	*cwd_with_tilde(t_env_table *env)
 		return (res);
 	}
 	return (cwd);
+}
+
+char	*expand_cwd(t_env_table *env, char limit)
+{
+	char	*cwd;
+	char	*tail;
+	char	*res;
+	int		depth;
+
+	cwd = cwd_with_tilde(env);
+	depth = limit - '0';
+	if (depth < 1)
+		depth = 1;
+	if (depth > 9)
+		depth = 9;
+	tail = cwd_tail(cwd, depth);
+	res = ft_strdup(tail);
+	free(cwd);
+	return (res);
 }
 
 void	prompt_default(t_env_table *env)
