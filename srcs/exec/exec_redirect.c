@@ -6,7 +6,7 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:26:52 by cassunca          #+#    #+#             */
-/*   Updated: 2025/12/18 13:29:11 by cassunca         ###   ########.fr       */
+/*   Updated: 2026/01/08 15:38:43 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ int	apply_redirect(t_redir *redir)
 			perror("Minishell: open");
 			return (-1);
 		}
-		if (redir->type == REDIR_IN
-			|| redir->type == REDIR_HEREDOC)
+		if (redir->type == REDIR_IN || redir->type == REDIR_HEREDOC)
 			dup2(fd, STDIN_FILENO);
 		if (dup2(fd, STDOUT_FILENO) == -1)
 		{
@@ -65,7 +64,7 @@ int	apply_redirect(t_redir *redir)
 	return (0);
 }
 
-int	handle_redirect(t_ast *redir_node, char **envp)
+int	handle_redirect(t_ast *redir_node, t_env_table *env)
 {
 	t_redir	*redir_list;
 	pid_t	pid;
@@ -81,7 +80,7 @@ int	handle_redirect(t_ast *redir_node, char **envp)
 	{
 		if (apply_redirect(redir_list) == -1)
 			exit(1);
-		status = execute_ast(redir_node->left, envp);
+		status = execute_ast(redir_node->left, env);
 		exit(status);
 	}
 	else

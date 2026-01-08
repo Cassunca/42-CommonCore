@@ -68,9 +68,11 @@ SRCS_PARSER = parser.c				\
 SRCS_EXEC	= exec.c				\
 			  exec_cmd.c			\
 			  exec_redirect.c		\
-			  stub.c				\
-			  exec_utils.c			\
-			  tester.c
+			  exec_pipe.c			\
+			  exec_and.c			\
+			  exec_or.c				\
+			  exec_path.c			\
+			  exec_utils.c			
 
 # Add directory prefix
 SRCS_EXEC	:= $(addprefix $(SRCSDIR)/$(EXECDIR)/, $(SRCS_EXEC))

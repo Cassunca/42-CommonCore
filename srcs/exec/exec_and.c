@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_pwd.c                                        :+:      :+:    :+:   */
+/*   exec_and.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 16:09:13 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/08 17:14:07 by kamys            ###   ########.fr       */
+/*   Created: 2026/01/06 12:28:27 by cassunca          #+#    #+#             */
+/*   Updated: 2026/01/06 13:58:30 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "built.h"
+#include "exec.h"
 
-void	pwd(t_env_table *env, t_cmd *cmd)
+int	handle_and(t_ast *root, t_env_table *env)
 {
-	char	*cwd;
+	int	status;
 
-	(void)env;
-	(void)cmd;
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		perror("pwd");
-	else
-	{
-		printf("%s\n", cwd);
-		free(cwd);
-	}
+	status = execute_ast(root->left, env);
+	if (status == 0)
+		return (execute_ast(root->right, env));
+	return (status);
 }
