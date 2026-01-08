@@ -6,27 +6,33 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2025/12/21 00:19:29 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/08 11:49:23 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(t_env_table *env)
+void	exec_built_in(t_env_table *env, t_cmd *cmd)
 {
-	char	**new_env;
-	size_t	i;
-
-	new_env = env_export(env);
-	i = 0;
-	while (new_env[i])
-		printf("%s\n", new_env[i++]);
+	if (!ft_strcmp(cmd->argv[0], "cd"))
+		return (cd(env, cmd));
+	if (!ft_strcmp(cmd->argv[0], "echo"))
+		return (echo(env, cmd));
+	if (!ft_strcmp(cmd->argv[0], "env"))
+		return (print_env(env, cmd));
+	if (!ft_strcmp(cmd->argv[0], "export"))
+		return (export(env, cmd));
+	if (!ft_strcmp(cmd->argv[0], "pwd"))
+		return (pwd(env, cmd));
+	if (!ft_strcmp(cmd->argv[0], "unset"))
+		return (unset(env, cmd));
 }
 
 void	input(char	*line, t_env_table	*env)
 {
 	t_token	*token;
 	t_ast	*ast;
+	char	**tmp;
 
 	token = lexer(line);
 	if (!token)
@@ -35,16 +41,8 @@ void	input(char	*line, t_env_table	*env)
 	ast = parser(token);
 	if (!ast)
 		return ;
-	if (!ft_strncmp(line, "pwd", 4))
-		printf("%s\n", env_get(env, "PWD"));
-	if (!ft_strncmp(line, "env", 4))
-		print_env(env);
-	if (!ft_strncmp(line, "exit", 5))
-	{
-		free(line);
-		printf("exit\n");
-		exit(0);
-	}
+	if (ast->type == NODE_CMD)
+		exec_built_in(env, (t_cmd *)ast->content);
 }
 
 int	run_interactive_shell(t_env_table *env)

@@ -17,8 +17,10 @@ RM			= rm -rf
 RUNLIB		= -C libft
 
 # Directories
+BUILTDIR	= built_in
 PROMPTDIR	= prompt
 PARSERDIR	= parser
+BUILTDIR	= built_in
 UTILSDIR	= utils
 LEXERDIR	= lexer
 ENVDIR		= env
@@ -26,22 +28,31 @@ SRCSDIR		= srcs
 OBJDIR		= objs
 
 # Source files
-SRCS		= main.c				\
+SRCS		= main.c					\
 			  signal.c
 
-SRCS_ENV	= hash.c				\
-			  env_init.c			\
-			  env_new.c				\
-			  env_table.c			\
+SRCS_ENV	= hash.c					\
+			  env_init.c				\
+			  env_new.c					\
+			  env_table.c				\
 			  env_export.c
 
-SRCS_UTILS	= ft_isspace.c			\
-			  ft_strcmp.c			\
+SRCS_UTILS	= ft_isspace.c				\
+			  ft_strcmp.c				\
 
-SRCS_LEXER	= lexer.c				\
+SRCS_LEXER	= lexer.c					\
 			  lexer_operetor.c		\
-			  lexer_word.c			\
+			  lexer_word.c				\
 			  lexer_utils.c
+
+SRCS_BUILT	= built_env.c			\
+			  built_cd.c			\
+			  built_export.c		\
+			  built_export_dis.c	\
+			  built_export_utils.c	\
+			  built_unset.c			\
+			  built_echo.c			\
+			  built_pwd.c
 
 SRCS_PARSER = parser.c				\
 			  parser_syntax.c		\
@@ -60,10 +71,21 @@ SRCS_PROMPT	= prompt_init.c			\
 			  prompt_parser.c		\
 			  prompt_default.c
 
+SRCS_BUILT	= built_env.c		\
+			  built_cd.c		\
+			  built_export.c	\
+			  built_unset.c		\
+			  built_echo.c		\
+			  built_pwd.c
+
 # Add directory prefix
+SRCS_BUILT	:= $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
+
 SRCS_PROMPT	:= $(addprefix $(SRCSDIR)/$(PROMPTDIR)/, $(SRCS_PROMPT))
 
 SRCS_PARSER	:= $(addprefix $(SRCSDIR)/$(PARSERDIR)/, $(SRCS_PARSER))
+
+SRCS_BUILT	:= $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
 
 SRCS_ENV	:= $(addprefix $(SRCSDIR)/$(ENVDIR)/, $(SRCS_ENV))
 
@@ -71,7 +93,7 @@ SRCS_UTILS	:= $(addprefix $(SRCSDIR)/$(UTILSDIR)/, $(SRCS_UTILS))
 
 SRCS_LEXER	:= $(addprefix $(SRCSDIR)/$(LEXERDIR)/, $(SRCS_LEXER))
 
-SRCS		:= $(addprefix $(SRCSDIR)/, $(SRCS)) $(SRCS_ENV) $(SRCS_LEXER) $(SRCS_UTILS) $(SRCS_PARSER) $(SRCS_PROMPT)
+SRCS		:= $(addprefix $(SRCSDIR)/, $(SRCS)) $(SRCS_ENV) $(SRCS_LEXER) $(SRCS_UTILS) $(SRCS_BUILT) $(SRCS_PARSER) $(SRCS_PROMPT)
 
 # Object files
 OBJS		= $(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
