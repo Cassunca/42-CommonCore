@@ -20,7 +20,6 @@ RUNLIB		= -C libft
 ALIASDIR	= alias
 EXPANDDIR	= expander
 EXECDIR		= exec
-EXECDIR		= exec
 BUILTDIR	= built_in
 PROMPTDIR	= prompt
 PARSERDIR	= parser
@@ -100,7 +99,9 @@ SRCS_EXEC	= exec.c				\
 			  exec_utils.c			\
 			  exec_heredoc.c		\
 			  exec_heredoc_utils.c	\
-			  exec_heredoc_utils2.c\
+			  exec_heredoc_utils2.c
+
+SRCS_EXPAND	= expand_ast.c
 
 # Add directory prefix
 SRCS_ALIAS	:= $(addprefix $(SRCSDIR)/$(ALIASDIR)/, $(SRCS_ALIAS))
@@ -110,8 +111,6 @@ SRCS_EXPAND	:= $(addprefix $(SRCSDIR)/$(EXPANDDIR)/, $(SRCS_EXPAND))
 SRCS_EXEC	:= $(addprefix $(SRCSDIR)/$(EXECDIR)/, $(SRCS_EXEC))
 
 SRCS_BUILT	:= $(addprefix $(SRCSDIR)/$(BUILTDIR)/, $(SRCS_BUILT))
-
-SRCS_PROMPT	:= $(addprefix $(SRCSDIR)/$(PROMPTDIR)/, $(SRCS_PROMPT))
 
 SRCS_PROMPT	:= $(addprefix $(SRCSDIR)/$(PROMPTDIR)/, $(SRCS_PROMPT))
 
