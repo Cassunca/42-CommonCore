@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/08 18:25:42 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/10 22:57:09 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,39 +84,38 @@ void	free_ast(t_ast *root)
 	free(root);
 }
 
-void	input(char	*line, t_env_table	*env)
+void	input(char	*line, t_shell *sh)
 {
 	t_token	*token;
 	t_ast	*ast_root;
-	int		exit_status;
 
 	token = lexer(line);
 	if (!token)
 		return ;
 	ast_root = parser(token);
-	expand_ast(ast_root, env);
+	expand_alias_ast(ast_root, sh);
+	expand_ast(ast_root, sh->env);
 	if (ast_root)
-		exit_status = execute_ast(ast_root, env);
-	(void)exit_status;
+		sh->last_status = execute_ast(ast_root, sh->env);
 	free_ast(ast_root);
 	free_tokens(token);
 }
 
-int	run_interactive_shell(t_env_table *env)
+int	run_interactive_shell(t_shell *sh)
 {
 	char		*line;
 	char		*prompt;
 
 	while (1)
 	{
-		prompt = get_prompt(env);
+		prompt = get_prompt(sh->env);
 		line = readline(prompt);
 		free(prompt);
 		if (!line)
 			break ;
 		if (*line)
 			add_history(line);
-		input(line, env);
+		input(line, sh);
 		free(line);
 	}
 	return (0);
@@ -135,22 +134,30 @@ int	run_command_mode(char **argv)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env_table	*env;
+	t_shell		*sh;
 	int			status;
 
-	status = 0;
-	env = env_init(97, envp);
-	if (!env)
-		return (1);
+	status = 1;
+	sh = malloc(sizeof(t_shell));
+	if (!sh)
+		return (status);
+	sh->env = env_init(97, envp);
+	if (!sh->env)
+	{
+		free(sh);
+		return (status);
+	}
 	setup_sig();
-	init_ps1(env);
+	init_ps1(sh->env);
+	sh->aliases = init_alias(97);
 	if (argc >= 3)
 		status = run_command_mode(argv);
 	else if (isatty(STDIN_FILENO))
-		status = run_interactive_shell(env);
+		status = run_interactive_shell(sh);
 	rl_clear_history();
 	rl_cleanup_after_signal();
-	env_destroy(env);
+	env_destroy(sh->env);
+	alias_destroy(sh->aliases);
 	printf("exit\n");
 	return (status);
 }

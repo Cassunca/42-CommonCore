@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:15:16 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/11 04:45:54 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/09 23:40:01 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ t_ast	*parse_command(t_token **tokens)
 		break ;
 	}
 	cmd->redir = redir;
+	cmd->alias_expanded = 0;
 	return (new_node(NODE_CMD, NULL, NULL, cmd));
 }

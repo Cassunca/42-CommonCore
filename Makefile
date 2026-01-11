@@ -17,6 +17,7 @@ RM			= rm -rf
 RUNLIB		= -C libft
 
 # Directories
+ALIASDIR	= alias
 EXPANDDIR	= expander
 EXECDIR		= exec
 BUILTDIR	= built_in
@@ -81,9 +82,17 @@ SRCS_PROMPT	= prompt_init.c			\
 			  prompt_len.c			\
 			  prompt_parser.c		
 
-SRCS_EXPAND	= expand_ast.c
+SRCS_EXPAND	= expand_ast.c			\
+			  expand_alias.c
+
+SRCS_ALIAS	= alias_init.c			\
+			  alias_export.c		\
+			  alias_new.c			\
+			  alias_table.c			
 
 # Add directory prefix
+SRCS_ALIAS	:= $(addprefix $(SRCSDIR)/$(ALIASDIR)/, $(SRCS_ALIAS))
+
 SRCS_EXPAND	:= $(addprefix $(SRCSDIR)/$(EXPANDDIR)/, $(SRCS_EXPAND))
 
 SRCS_EXEC	:= $(addprefix $(SRCSDIR)/$(EXECDIR)/, $(SRCS_EXEC))
@@ -100,7 +109,7 @@ SRCS_UTILS	:= $(addprefix $(SRCSDIR)/$(UTILSDIR)/, $(SRCS_UTILS))
 
 SRCS_LEXER	:= $(addprefix $(SRCSDIR)/$(LEXERDIR)/, $(SRCS_LEXER))
 
-SRCS		:= $(addprefix $(SRCSDIR)/, $(SRCS)) $(SRCS_ENV) $(SRCS_LEXER) $(SRCS_UTILS) $(SRCS_BUILT) $(SRCS_PARSER) $(SRCS_PROMPT) $(SRCS_EXEC) $(SRCS_EXPAND)
+SRCS		:= $(addprefix $(SRCSDIR)/, $(SRCS)) $(SRCS_ENV) $(SRCS_LEXER) $(SRCS_UTILS) $(SRCS_BUILT) $(SRCS_PARSER) $(SRCS_PROMPT) $(SRCS_EXEC) $(SRCS_EXPAND) $(SRCS_ALIAS)
 
 # Object files
 OBJS		= $(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
