@@ -6,83 +6,11 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/11 10:57:34 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/11 20:55:48 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	exec_built_in(t_env_table *env, t_cmd *cmd)
-{
-	if (!ft_strcmp(cmd->argv[0], "cd"))
-		return (cd(env, cmd));
-	if (!ft_strcmp(cmd->argv[0], "echo"))
-		return (echo(env, cmd));
-	if (!ft_strcmp(cmd->argv[0], "env"))
-		return (print_env(env, cmd));
-	if (!ft_strcmp(cmd->argv[0], "export"))
-		return (export(env, cmd));
-	if (!ft_strcmp(cmd->argv[0], "pwd"))
-		return (pwd(env, cmd));
-	if (!ft_strcmp(cmd->argv[0], "unset"))
-		return (unset(env, cmd));
-}
-
-void	free_tokens(t_token *tok)
-{
-	t_token	*tmp;
-
-	while (tok)
-	{
-		tmp = tok->next;
-		free(tok->value);
-		free(tok);
-		tok = tmp;
-	}
-}
-
-void	free_redir(t_redir *r)
-{
-	t_redir *next;
-
-	while (r)
-	{
-		next = r->next;
-		free(r->file);
-		free(r);
-		r = next;
-	}
-}
-
-void	free_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
-	if (cmd->argv)
-	{
-		i = 0;
-		while (cmd->argv[i])
-			free(cmd->argv[i++]);
-		free(cmd->argv);
-	}
-	free_redir(cmd->redir);
-	free(cmd);
-}
-
-void	free_ast(t_ast *root)
-{
-	if (!root)
-		return ;
-	free_ast(root->left);
-	free_ast(root->right);
-	if (root->type == NODE_CMD)
-		free_cmd((t_cmd *)root->content);
-	else
-		free(root->content);
-	free(root);
-}
 
 void	input(char	*line, t_shell *sh)
 {
@@ -154,11 +82,7 @@ int	main(int argc, char **argv, char **envp)
 		status = run_command_mode(argv);
 	else if (isatty(STDIN_FILENO))
 		status = run_interactive_shell(sh);
-	rl_clear_history();
-	rl_cleanup_after_signal();
-	env_destroy(sh->env);
-	alias_destroy(sh->aliases);
-	free(sh);
+	clean_up(sh);
 	printf("exit\n");
 	return (status);
 }

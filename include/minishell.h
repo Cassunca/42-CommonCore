@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/10 00:05:43 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/11 20:55:34 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,15 @@ typedef struct s_shell
 
 
 void	input(char	*line, t_shell *sh);
+void	free_tokens(t_token *tok);
+void	free_redir(t_redir *r);
+void	free_cmd(t_cmd *cmd);
+void	free_ast(t_ast *root);
+void	clean_up(t_shell *sh);
 // signal.c
-int				get_singal(void);
-void			reset_signal(void);
-void			handler(int sig);
-void			setup_sig(void);
+int		get_singal(void);
+void	reset_signal(void);
+void	handler(int sig);
+void	setup_sig(void);
 
 #endif
