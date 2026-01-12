@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:15:01 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/11 10:58:22 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/11 21:02:44 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static	void	free_argv(char **arg)
 	free(arg);
 }
 
-void	replace_arg(t_cmd *cmd, char *alias_val)
+static void	replace_arg(t_cmd *cmd, char *alias_val)
 {
 	char	**new_argv;
 	char	**alias_words;
@@ -60,7 +60,7 @@ void	replace_arg(t_cmd *cmd, char *alias_val)
 	cmd->argv = new_argv;
 }
 
-void	expand_alias(t_cmd *cmd, t_shell *sh)
+static void	expand_alias(t_cmd *cmd, t_shell *sh)
 {
 	char	*alias_val;
 

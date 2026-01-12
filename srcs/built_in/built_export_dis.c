@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 16:28:32 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/06 16:37:36 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/11 21:18:17 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,3 @@ void	display_export(t_env_table *env)
 	order_array(order);
 	print_export(order);
 }
-

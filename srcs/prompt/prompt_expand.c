@@ -6,13 +6,14 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:39:55 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/08 17:01:48 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/11 21:20:46 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prompt.h"
 
-static void	append_prompt_value(t_env_table *env, char **val, char **res, int *j)
+static void	append_prompt_value(t_env_table *env, char **val,
+	char **res, int *j)
 {
 	char	*p;
 

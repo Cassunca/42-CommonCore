@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_ast.c                                       :+:      :+:    :+:   */
+/*   expand_tilde.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/08 18:01:18 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/11 21:12:31 by kamys            ###   ########.fr       */
+/*   Created: 2026/01/11 21:08:49 by kamys             #+#    #+#             */
+/*   Updated: 2026/01/11 21:10:12 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-void	expand_ast(t_ast *root, t_env_table *env)
+void	handle_tilde(char **res, char *s, int *i, t_env_table *env)
 {
-	if (!root)
-		return ;
-	if (root->type == NODE_CMD)
-		expand_cmd((t_cmd *)root->content, env);
-	else if (root->type == NODE_REDIR)
-		expand_redir((t_redir *)root->content, env);
-	expand_ast(root->left, env);
-	expand_ast(root->right, env);
+	if (*i == 0 || s[*i - 1] == ' ')
+		append_str(res, env_get(env, "HOME"));
+	else
+		append_char(res, s[*i]);
+	(*i)++;
 }

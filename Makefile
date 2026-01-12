@@ -84,7 +84,14 @@ SRCS_PROMPT	= prompt_init.c			\
 			  prompt_parser.c		
 
 SRCS_EXPAND	= expand_ast.c			\
-			  expand_alias.c
+			  expand_alias.c		\
+			  expand_cmd.c			\
+			  expand_quotes.c		\
+			  expand_redir.c		\
+			  expand_tilde.c		\
+			  expand_utils.c		\
+			  expand_vars.c			\
+			  expand_word.c
 
 SRCS_ALIAS	= alias_init.c			\
 			  alias_export.c		\

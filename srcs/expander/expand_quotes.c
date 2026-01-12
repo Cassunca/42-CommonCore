@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_ast.c                                       :+:      :+:    :+:   */
+/*   expand_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/08 18:01:18 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/11 21:12:31 by kamys            ###   ########.fr       */
+/*   Created: 2026/01/11 21:08:41 by kamys             #+#    #+#             */
+/*   Updated: 2026/01/11 21:10:47 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-void	expand_ast(t_ast *root, t_env_table *env)
+void	handle_single_quotes(char **res, char *s, int *i)
 {
-	if (!root)
-		return ;
-	if (root->type == NODE_CMD)
-		expand_cmd((t_cmd *)root->content, env);
-	else if (root->type == NODE_REDIR)
-		expand_redir((t_redir *)root->content, env);
-	expand_ast(root->left, env);
-	expand_ast(root->right, env);
+	(*i)++;
+	while (s[*i] && s[*i] != '\'')
+		append_char(res, s[(*i)++]);
+	if (s[*i] == '\'')
+		(*i)++;
+}
+
+void	handle_double_quotes(char **res, char *s, int *i, t_env_table *env)
+{
+	(*i)++;
+	while (s[*i] && s[*i] != '"')
+	{
+		if (s[*i] == '$')
+			handle_dolar(res, s, i, env);
+		else
+			append_char(res, s[(*i)++]);
+	}
+	if (s[*i] == '"')
+		(*i)++;
 }

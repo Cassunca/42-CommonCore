@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 16:40:49 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/08 11:46:17 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/11 21:18:35 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	is_valid_key(char *s)
 void	unset(t_env_table *env, t_cmd *cmd)
 {
 	int	i;
-
 
 	i = 1;
 	while (cmd->argv[i])

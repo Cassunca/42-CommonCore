@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:05:57 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/08 17:29:33 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/11 21:19:08 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	is_builtin(char **av)
 	if (!av || !av[0])
 		return (0);
 	if (ft_strcmp(av[0], "cd") == 0 || ft_strcmp(av[0], "echo") == 0
-			|| ft_strcmp(av[0], "env") == 0 || ft_strcmp(av[0], "export") == 0
-			|| ft_strcmp(av[0], "pwd") == 0 || ft_strcmp(av[0], "unset") == 0)
+		|| ft_strcmp(av[0], "env") == 0 || ft_strcmp(av[0], "export") == 0
+		|| ft_strcmp(av[0], "pwd") == 0 || ft_strcmp(av[0], "unset") == 0)
 		return (1);
 	return (0);
 }
@@ -69,4 +69,3 @@ char	*resolve_path(char *cmd, t_env_table *env)
 	free_char_array(paths);
 	return (NULL);
 }
-

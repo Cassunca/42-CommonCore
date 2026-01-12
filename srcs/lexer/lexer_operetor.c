@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_operetor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:57 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/11/28 20:37:46 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:21:09 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_token	*tokenize_operetor(const char *s, int *i)
 {
 	int					j;
 	int					len;
-	static const t_op	ops[] = {// ver se isso é permitido ^.^
+	static const t_op	ops[] = {
 	{"<<", TK_HEREDOC},
 	{">>", TK_APPEND},
 	{"&&", TK_AND},
