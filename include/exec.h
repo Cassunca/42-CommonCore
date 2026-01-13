@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 02:32:19 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/08 15:40:46 by cassunca         ###   ########.fr       */
+/*   Updated: 2026/01/13 15:32:59 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ typedef struct s_cmd		t_cmd;
 /* ========== EXEC ========== */
 
 int		execute_ast(t_ast *root, t_env_table *env);
-void	exec_child(char *path_cmd, char **av, t_env_table *env);
-int		exec_simple_command(char *path_cmd, char **av, t_env_table *env);
+int		exec_simple_command(t_redir *redir, char *path_cmd,
+			char **av, t_env_table *env);
 
 /* ========== UTILS ========== */
 
@@ -33,9 +33,7 @@ void	free_char_array(char **arr);
 
 /* ========== REDIRECT ========== */
 
-int		handle_redirect(t_ast *redir_node, t_env_table *env);
 int		apply_redirect(t_redir *redirs);
-t_ast	*new_redir_node(t_ast *cmd_node, t_redir_type type, char *file);
 
 /* ========== PIPE/AND/OR ========== */
 
@@ -46,8 +44,6 @@ int		handle_or(t_ast *root, t_env_table *env);
 /* ========== PATH ========== */
 
 char	*resolve_path(char *cmd, t_env_table *env);
-int		execute_builtin(t_cmd *cmd, t_env_table *env);
-int		is_builtin(char **av);
 
 /* ========== CMD ========== */
 
