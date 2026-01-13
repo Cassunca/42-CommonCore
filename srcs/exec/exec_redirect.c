@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:26:52 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/22 11:45:49 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:08:05 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	apply_redirect(t_redir *redir)
 		{
 			close(fd);
 			return (-1);
-		}
 		close(fd);
 		redir = redir->next;
 	}
