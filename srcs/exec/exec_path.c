@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:05:57 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/11 21:19:08 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/13 13:17:31 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*resolve_path(char *cmd, t_env_table *env)
 	i = 0;
 	while (paths[i])
 	{
-		tmp = ft_strjoin(paths[i], "/");
+		tmp = ft_strjoin(paths[i++], "/");
 		full_path = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(full_path, X_OK) == 0)
@@ -64,7 +64,6 @@ char	*resolve_path(char *cmd, t_env_table *env)
 			return (full_path);
 		}
 		free(full_path);
-		i++;
 	}
 	free_char_array(paths);
 	return (NULL);

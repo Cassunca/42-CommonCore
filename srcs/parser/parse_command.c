@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:15:16 by amyrodri          #+#    #+#             */
-/*   Updated: 2026/01/09 23:40:01 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/13 13:27:48 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-t_redir_type	redir_type(t_token_type type)
-{
-	if (type == TK_REDIR_IN)
-		return (REDIR_IN);
-	if (type == TK_REDIR_OUT)
-		return (REDIR_OUT);
-	return (REDIR_APPEND);
-}
 
 t_redir	*redirs(t_token **tokens, t_token_type type)
 {
@@ -94,7 +85,6 @@ t_ast	*parse_command(t_token **tokens)
 			add_word_arg(cmd, tokens);
 			continue ;
 		}
-		break ;
 	}
 	cmd->redir = redir;
 	cmd->alias_expanded = 0;

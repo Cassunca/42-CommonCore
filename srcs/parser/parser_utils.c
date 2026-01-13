@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 23:51:43 by cassunca          #+#    #+#             */
-/*   Updated: 2025/12/15 16:10:02 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/13 13:27:52 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,13 @@ int	check_inside(t_token *head, t_token *end)
 	if (check_in_end(head, end))
 		return (1);
 	return (0);
+}
+
+t_redir_type	redir_type(t_token_type type)
+{
+	if (type == TK_REDIR_IN)
+		return (REDIR_IN);
+	if (type == TK_REDIR_OUT)
+		return (REDIR_OUT);
+	return (REDIR_APPEND);
 }
