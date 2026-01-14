@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/22 12:12:14 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:15:18 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ int	run_interactive_shell(t_shell *sh)
 	return (0);
 }
 
-int	run_command_mode(char **argv)
+int	run_command_mode(char **argv, t_shell *sh)
 {
 	if (!ft_strncmp(argv[1], "-c", 2))
 	{
-		printf("algum dia vai começar a executar -> %s\n", argv[2]);
-		exit (0);
+		if (argv[2])
+			input(argv[2], sh);
+		exit (sh->last_status);
 	}
 	ft_putstr_fd("usage: minishell -c \"command\"\n", 2);
 	return (1);
@@ -87,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	init_ps1(sh->env);
 	sh->aliases = init_alias(97);
 	if (argc >= 3)
-		status = run_command_mode(argv);
+		status = run_command_mode(argv, sh);
 	else if (isatty(STDIN_FILENO))
 		status = run_interactive_shell(sh);
 	clean_up(sh);
