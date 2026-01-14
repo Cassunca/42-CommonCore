@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_subshell.c                                  :+:      :+:    :+:   */
+/*   parse_subshell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:16:58 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/11 03:17:21 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:38:36 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ t_ast	*parse_subshell(t_token **tokens)
 	t_ast	*node;
 
 	if (!*tokens || (*tokens)->type != TK_LPAREN)
-	{
-		printf("faz essa porra direito ai ^-^\n");
 		exit(1);
-	}
 	*tokens = (*tokens)->next;
 	child = parse_sequence(tokens);
 	if (!*tokens || (*tokens)->type != TK_RPAREN)
