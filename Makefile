@@ -69,6 +69,17 @@ SRCS_PARSER = parser.c				\
 			  parse_sequence.c		\
 			  parse_subshell.c	
 
+SRCS_EXEC	= exec.c				\
+			  exec_cmd.c			\
+			  exec_redirect.c		\
+			  exec_pipe.c			\
+			  exec_and.c			\
+			  exec_or.c				\
+			  exec_path.c			\
+			  exec_sub.c			\
+			  exec_seq.c			\
+			  exec_utils.c			
+
 SRCS_PROMPT	= prompt_init.c			\
 			  prompt_expand.c		\
 			  prompt_utils.c		\
@@ -152,25 +163,6 @@ all: $(NAME)
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) $(LIBFT) $(RDFLAGS) -o $(NAME)
 	@printf "$(GREEN)🎉 Executable $(NAME) successfully created!$(NC)\n"
-
-# Compile object files with percentage
-# $(OBJDIR)/%.o: $(SRCSDIR)/%.c
-# 	@mkdir -p $(dir $@)
-# 	@$(eval COUNT=$(shell echo $$(($(COUNT)+1))))
-# 	@printf "\r\033[K$(BLUE)Compiling:%3d%% [%d/%d] -> %s$(NC)" \
-# 		$$((100 * $(COUNT) / $(TOTAL))) $(COUNT) $(TOTAL) $<
-# 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-
-# $(OBJDIR)/%.o: $(SRCSDIR)/%.c
-# 	@mkdir -p $(dir $@)
-# 	@$(eval COUNT=$(shell echo $$(($(COUNT)+1))))
-# 	@PROGRESS=$$((100 * $(COUNT) / $(TOTAL))); \
-# 	BAR_LEN=$$((20 * $(COUNT) / $(TOTAL))); \
-# 	BAR=$$(printf "%*s" $$BAR_LEN "" | tr ' ' '='); \
-# 	EMPTY=$$(printf "%*s" $$((20-BAR_LEN)) "" | tr ' ' ' '); \
-# 	printf "\r\033[K$(BLUE)Compiling: [$$BAR$$EMPTY] %3d%% [%d/%d] -> %s$(NC)" \
-# 	$$PROGRESS $(COUNT) $(TOTAL) $<
-# 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c
 	@mkdir -p $(dir $@)
