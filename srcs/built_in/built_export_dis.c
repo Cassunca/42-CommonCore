@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 16:28:32 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/22 12:06:34 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:16:48 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,8 @@ void	display_export(t_env_table *env)
 	order[j] = NULL;
 	order_array(order);
 	print_export(order);
+	i = 0;
+	while (order[i])
+		free(order[i++]);
+	free(order);
 }

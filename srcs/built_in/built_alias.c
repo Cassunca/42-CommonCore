@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_alias.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:21:20 by amyrodri          #+#    #+#             */
-/*   Updated: 2026/01/14 17:14:08 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/15 12:50:03 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	print_alias(char **order)
 		{
 			write(1, order[i], eq - order[i]);
 			write(1, "=", 1);
-			write(1, eq + 1, ft_strlen(eq) + 1);
+			write(1, eq + 1, ft_strlen(eq + 1));
 			write(1, "\n", 1);
 		}
 		else
@@ -81,6 +81,27 @@ void	print_alias(char **order)
 			write(1, order[i], ft_strlen(order[i]));
 			write(1, "\n", 1);
 		}
+		i++;
+	}
+}
+
+static void	order_array(char **array)
+{
+	int		i;
+	int		j;
+	char	*key;
+
+	i = 1;
+	while (array[i])
+	{
+		key = array[i];
+		j = i - 1;
+		while (j >= 0 && key_cmp(array[j], key) > 0)
+		{
+			array[j + 1] = array[j];
+			j--;
+		}
+		array[j + 1] = key;
 		i++;
 	}
 }
@@ -105,13 +126,74 @@ void	display_alias(t_alias_table *alias)
 		}
 	}
 	order[j] = NULL;
+	order_array(order);
 	print_alias(order);
+	i = 0;
+	while (order[i])
+		free(order[i++]);
+	free(order);
 }
 
-// void	handle_alias(t_alias_table *alias, char *s);
-// {
-	
-// }
+int	is_valid_key(char *s)
+{
+	int	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i] && s[i] != '=')
+	{
+		if (s[i] == ' ' && s[i] == '\t')
+			return (0);
+		i++;
+	}
+	if (i == 0 && s[i] != '=')
+		return (0);
+	return (1);
+}
+
+void	parse_alias(char *s, char **key, char **value)
+{
+	char	*eq;
+
+	eq = ft_strchr(s, '=');
+	if (!eq)
+	{
+		*key = ft_strdup(s);
+		*value = NULL;
+		return ;
+	}
+	*key = ft_substr(s, 0, eq - s);
+	*value = ft_strdup(eq + 1);
+}
+
+void	handle_alias(t_alias_table *alias, char *s)
+{
+	char	*key;
+	char	*value;
+
+	parse_alias(s, &key, &value);
+	if (!is_valid_key(key))
+	{
+		ft_putstr_fd("alias: ", 2);
+		ft_putstr_fd(key, 2);
+		ft_putstr_fd(": not a valid identifier\n", 2);
+		free(key);
+		free(value);
+		return ;
+	}
+	if (!ft_strchr(s, '='))
+	{
+		value = alias_get(alias, key);
+		if (value)
+			printf("alias %s='%s'\n", key, value);
+		free(key);
+		return ;
+	}
+	alias_set(alias, key, value);
+	free(key);
+	free(value);
+}
 
 void	alias(t_alias_table *alias, t_cmd *cmd)
 {
@@ -119,7 +201,7 @@ void	alias(t_alias_table *alias, t_cmd *cmd)
 
 	i = 1;
 	if (!cmd->argv[i])
-		display_alias(alias);
-	// while (cmd->argv[i])
-	// 	handle_alias(alias, cmd->argv[i++]);
+		return (display_alias(alias));
+	while (cmd->argv[i])
+		handle_alias(alias, cmd->argv[i++]);
 }
