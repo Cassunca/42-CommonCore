@@ -6,13 +6,13 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 11:51:18 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/18 11:52:42 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/18 11:57:31 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built.h"
 
-int	alias_len(t_alias_table *table)
+static int	alias_len(t_alias_table *table)
 {
 	size_t	count;
 	size_t	i;
@@ -32,7 +32,7 @@ int	alias_len(t_alias_table *table)
 	return (count);
 }
 
-void	print_alias(char **order)
+static void	print_alias(char **order)
 {
 	int		i;
 	char	*eq;
