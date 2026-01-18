@@ -58,6 +58,7 @@ SRCS_BUILT	= built_env.c			\
 			  built_unset.c			\
 			  built_echo.c			\
 			  built_alias.c			\
+			  built_unalias.c		\
 			  built_pwd.c
 
 SRCS_PARSER = parser.c				\

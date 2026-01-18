@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 13:00:29 by amyrodri          #+#    #+#             */
-/*   Updated: 2026/01/22 12:16:03 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:16:53 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	echo(t_env_table *env, t_cmd *cmd);
 void	pwd(t_env_table *env, t_cmd *cmd);
 void	cd(t_env_table *env, t_cmd *path);
 void	alias(t_alias_table *alias, t_cmd *cmd);
+void	unalias(t_alias_table *alias, t_cmd *cmd);
 
 #endif

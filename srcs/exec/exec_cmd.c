@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:15:03 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/22 12:15:40 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:16:57 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_builtin(char **av)
 	if (ft_strcmp(av[0], "cd") == 0 || ft_strcmp(av[0], "echo") == 0
 		|| ft_strcmp(av[0], "env") == 0 || ft_strcmp(av[0], "export") == 0
 		|| ft_strcmp(av[0], "pwd") == 0 || ft_strcmp(av[0], "unset") == 0
-		|| ft_strcmp(av[0], "alias") == 0)
+		|| ft_strcmp(av[0], "alias") == 0 || ft_strcmp(av[0], "unalias") == 0)
 		return (1);
 	return (0);
 }
@@ -40,6 +40,8 @@ static int	execute_builtin(t_cmd *cmd, t_shell *sh)
 		unset(sh->env, cmd);
 	if (ft_strcmp(cmd->argv[0], "alias") == 0)
 		alias(sh->aliases, cmd);
+	if (ft_strcmp(cmd->argv[0], "unalias") == 0)
+		unalias(sh->aliases, cmd);
 	return (0);
 }
 
