@@ -1,35 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_export_uitls.c                               :+:      :+:    :+:   */
+/*   built_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 16:30:48 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/06 16:37:04 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/18 11:53:19 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built.h"
 
-int	env_len(t_env_table *table)
+int	key_len(const char *s)
 {
-	size_t	count;
-	size_t	i;
-	t_env	*curr;
+	int	i;
 
-	count = 0;
 	i = 0;
-	while (i < table->size)
+	while (s[i] && s[i] != '=')
+		i++;
+	return (i);
+}
+
+int	key_cmp(const char *s1, const char *s2)
+{
+	int	i;
+	int	len1;
+	int	len2;
+
+	i = 0;
+	len1 = key_len(s1);
+	len2 = key_len(s2);
+	while (i < len1 && i < len2)
 	{
-		curr = table->buckets[i++];
-		while (curr)
-		{
-			count++;
-			curr = curr->next;
-		}
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
 	}
-	return (count);
+	return (len1 - len2);
 }
 
 char	*ft_strjoin3(char *s1, char *s2, char *s3)
