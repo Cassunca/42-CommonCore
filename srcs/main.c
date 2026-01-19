@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/22 12:15:36 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:17:45 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	input(char	*line, t_shell *sh)
 	if (!token)
 		return ;
 	ast_root = parser(token);
+	free_tokens(token);
 	expand_alias_ast(ast_root, sh);
 	expand_ast(ast_root, sh->env);
 	if (traverse_ast_heredoc(ast_root, sh) == INTERRUPTED_BY_SIGINT)
@@ -36,12 +37,14 @@ void	input(char	*line, t_shell *sh)
 	unlink(".heredoc_tmp");
 }
 
-int	run_interactive_shell(t_shell *sh)
+void	run_interactive_shell(t_shell *sh)
 {
 	char		*line;
 	char		*prompt;
+	int			exit_code;
 
-	while (1)
+	sh->should_exit = 0;
+	while (!sh->should_exit)
 	{
 		prompt = get_prompt(sh->env);
 		line = readline(prompt);
@@ -53,7 +56,10 @@ int	run_interactive_shell(t_shell *sh)
 		input(line, sh);
 		free(line);
 	}
-	return (0);
+	exit_code = sh->exit_code;
+	clean_up(sh);
+	printf("exit\n");
+	exit(exit_code);
 }
 
 int	run_command_mode(char **argv, t_shell *sh)
@@ -90,8 +96,6 @@ int	main(int argc, char **argv, char **envp)
 	if (argc >= 3)
 		status = run_command_mode(argv, sh);
 	else if (isatty(STDIN_FILENO))
-		status = run_interactive_shell(sh);
-	clean_up(sh);
-	printf("exit\n");
+		run_interactive_shell(sh);
 	return (status);
 }

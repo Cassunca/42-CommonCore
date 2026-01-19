@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:15:03 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/22 12:16:57 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:17:49 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,17 @@ static int	is_builtin(char **av)
 	if (ft_strcmp(av[0], "cd") == 0 || ft_strcmp(av[0], "echo") == 0
 		|| ft_strcmp(av[0], "env") == 0 || ft_strcmp(av[0], "export") == 0
 		|| ft_strcmp(av[0], "pwd") == 0 || ft_strcmp(av[0], "unset") == 0
-		|| ft_strcmp(av[0], "alias") == 0 || ft_strcmp(av[0], "unalias") == 0)
+		|| ft_strcmp(av[0], "alias") == 0 || ft_strcmp(av[0], "unalias") == 0
+		|| ft_strcmp(av[0], "exit") == 0)
 		return (1);
 	return (0);
+}
+
+void	ft_exit(t_shell *sh, t_cmd *cmd)
+{
+	(void)cmd;
+	sh->should_exit = 1;
+	sh->exit_code = 1;
 }
 
 static int	execute_builtin(t_cmd *cmd, t_shell *sh)
@@ -42,6 +50,8 @@ static int	execute_builtin(t_cmd *cmd, t_shell *sh)
 		alias(sh->aliases, cmd);
 	if (ft_strcmp(cmd->argv[0], "unalias") == 0)
 		unalias(sh->aliases, cmd);
+	if (ft_strcmp(cmd->argv[0], "exit") == 0)
+		ft_exit(sh, cmd);
 	return (0);
 }
 

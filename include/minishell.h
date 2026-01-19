@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/22 12:16:30 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:17:38 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_shell
 	t_env_table		*env;
 	t_alias_table	*aliases;
 	int				last_status;
+	int				exit_code;
+	int				should_exit;
 }	t_shell;
 
 /* ========== INPUT ========== */
