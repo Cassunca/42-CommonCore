@@ -2,7 +2,7 @@
 
 > `minishell` é uma implementação em **C** de um interpretador de comandos inspirado no **bash**, capaz de executar comandos externos, builtins, gerenciar **pipes**, **redirecionamentos**, **variáveis de ambiente** e **sinais**, simulando o comportamento básico de um shell Unix.
 
-> Este projeto foi desenvolvido em parceria por [**Amy Rodrigues**](https://github.com/AmyRodri) e [**Cristian Cassunca**](https://github.com/Cassunca), como parte do currículo da escola 42, com foco no estudo de **processos**, **execução concorrente**, **comunicação entre processos** e **gerenciamento de descritores de arquivo**.
+> Este projeto foi desenvolvido em parceria por [**Amy Rodrigues**](https://github.com/AmyRodri) e [**Christian Assunção**](https://github.com/Cassunca), como parte do currículo da escola 42, com foco no estudo de **processos**, **execução concorrente**, **comunicação entre processos** e **gerenciamento de descritores de arquivo**.
 
 ![Banner](https://img.shields.io/badge/Project-minishell-blueviolet)
 ![C](https://img.shields.io/badge/Language-C-red)
@@ -274,7 +274,7 @@ A organização do projeto foi pensada para separar responsabilidades e facilita
 ## 👩‍💻 Autoria
 
 **✨ [Amy Rodrigues](https://github.com/AmyRodri) ✨**  
-**✨ [Cristian Cassunca](https://github.com/Cassunca) ✨**
+**✨ [Christian Assunção](https://github.com/Cassunca) ✨**
 
 🎓 Estudantes de **C** e **desenvolvimento de baixo nível** na **[42 São Paulo](https://www.42sp.org.br/)**  
 🐧 Entusiastas de **Linux** | 💻 Amantes de **terminal**  
