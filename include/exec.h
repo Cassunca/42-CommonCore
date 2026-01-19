@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 02:32:19 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/22 12:15:32 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:17:29 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ void	free_char_array(char **arr);
 
 int		apply_redirect(t_redir *redirs);
 
-/* ========== PIPE/AND/OR ========== */
+/* ========== PIPE/AND/OR/SUB/SEQ ========== */
 
 int		handle_pipe(t_ast *root, t_shell *sh);
 int		handle_and(t_ast *root, t_shell *sh);
 int		handle_or(t_ast *root, t_shell *sh);
+int		execute_sub(t_ast *root, t_shell *sh);
+int		handle_sequence(t_ast *root, t_shell *sh);
 
 /* ========== PATH ========== */
 
