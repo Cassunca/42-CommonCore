@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_syntax.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 14:37:31 by amyrodri          #+#    #+#             */
-/*   Updated: 2025/12/11 05:25:14 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/20 14:28:46 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_borders(t_token *tokens)
 	t_token	*head;
 
 	head = tokens;
-	if (token_op(head->type))
+	if (token_op(head->type) && head->type != TK_HEREDOC)
 	{
 		printf("Syntax %s : error\n", head->value);
 		return (1);

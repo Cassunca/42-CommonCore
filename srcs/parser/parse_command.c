@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:15:16 by amyrodri          #+#    #+#             */
-/*   Updated: 2026/01/13 14:22:39 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:55:09 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_ast	*parse_command(t_token **tokens)
 		type = (*tokens)->type;
 		if (is_stop_token(type))
 			break ;
-		if (type == TK_REDIR_IN || type == TK_REDIR_OUT || type == TK_APPEND)
+		if (type == TK_REDIR_IN || type == TK_REDIR_OUT || type == TK_APPEND || type == TK_HEREDOC)
 		{
 			redir = redirs(tokens, type);
 			continue ;

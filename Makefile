@@ -77,7 +77,8 @@ SRCS_EXEC	= exec.c				\
 			  exec_path.c			\
 			  exec_utils.c			\
 			  exec_heredoc.c		\
-			  exec_heredoc_utils.c		
+			  exec_heredoc_utils.c	\
+			  exec_heredoc_utils2.c\
 
 SRCS_PROMPT	= prompt_init.c			\
 			  prompt_expand.c		\

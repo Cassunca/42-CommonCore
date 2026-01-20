@@ -6,7 +6,7 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/14 17:55:53 by cassunca         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:52:20 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,19 @@ void	input(char	*line, t_shell *sh)
 	t_token	*token;
 	t_ast	*ast_root;
 
+
 	token = lexer(line);
 	if (!token)
 		return ;
 	ast_root = parser(token);
 	expand_alias_ast(ast_root, sh);
 	expand_ast(ast_root, sh->env);
-	if (exec_heredoc((t_redir *)ast_root, sh) == INTERRUPTED_BY_SIGINT)
+	if (traverse_ast_heredoc(ast_root, sh) == INTERRUPTED_BY_SIGINT)
+	{
+		free_ast(ast_root);
+		free_tokens(token);
 		return ;
+	}
 	if (ast_root)
 		sh->last_status = execute_ast(ast_root, sh->env);
 	free_ast(ast_root);

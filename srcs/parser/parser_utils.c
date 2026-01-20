@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 23:51:43 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/13 13:27:52 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/20 14:24:14 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,7 @@ t_redir_type	redir_type(t_token_type type)
 		return (REDIR_IN);
 	if (type == TK_REDIR_OUT)
 		return (REDIR_OUT);
+	if (type == TK_HEREDOC)
+		return (REDIR_HEREDOC);
 	return (REDIR_APPEND);
 }

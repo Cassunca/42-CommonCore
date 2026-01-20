@@ -6,7 +6,7 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:01:42 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/14 17:52:43 by cassunca         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:17:44 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 int	is_delimiter(char *line, char *delimiter)
 {
-	int	len;
+	size_t	len;
 	
+	if (!line || !delimiter)
+		return (0);
 	len = ft_strlen(delimiter);
-	if (ft_strncmp(line, delimiter, len) == 0
-		&& (line[len] == '\n' || line[len] == '\0'))
-		return (1);
+	if (ft_strncmp(line, delimiter, len) == 0)
+	{
+		if (line[len] == '\n' || line[len] == '\0')
+			return (1);
+	}
 	return (0);
 }
 
@@ -43,7 +47,7 @@ static char	*get_var_value(char *name, t_shell *sh)
 	if (ft_strcmp(name, "?") == 0)
 		return (ft_itoa(sh->last_status));
 	value = env_get(sh->env, name);
-	if (value)
+	if (!value)
 		return (ft_strdup(""));
 	return (ft_strdup(value));
 }
@@ -71,6 +75,7 @@ char	*expand_variables_in_heredoc(char *line, t_shell *sh)
 	int		i;
 	char	*new_line;
 	char	*tmp;
+	char	*aux;
 
 	i = 0;
 	new_line = ft_strdup("");
@@ -78,17 +83,13 @@ char	*expand_variables_in_heredoc(char *line, t_shell *sh)
 	{
 		if (line[i] == '$' && line[i + 1] && (ft_isalnum(line[i + 1]) ||
 				line[i + 1] == '_' || line[i + 1] == '?'))
-		{
-			tmp = extract_and_replace_var(&line[i++], sh, &i);
-			new_line = ft_strjoin(new_line, tmp);
-			free(tmp);
-		}
+			tmp = extract_and_replace_var(&line[i], sh, &i);
 		else
-		{
 			tmp = ft_substr(line, i++, 1);
-			new_line = ft_strjoin(new_line, tmp);
-			free(tmp);
-		}
+		aux = new_line;
+		new_line = ft_strjoin(aux, tmp);
+		free(aux);
+		free(tmp);
 	}
 	free(line);
 	return (new_line);

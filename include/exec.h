@@ -6,7 +6,7 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 02:32:19 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/14 17:54:32 by cassunca         ###   ########.fr       */
+/*   Updated: 2026/01/19 18:23:55 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ int		exec_heredoc(t_redir *redir, t_shell *sh);
 int		is_delimiter(char *line, char *delimiter);
 int		check_if_quoted(char *delimiter);
 char	*expand_variables_in_heredoc(char *line, t_shell *sh);
+int 	handle_cmd_heredocs(void *content, t_shell *sh);
+int 	traverse_ast_heredoc(t_ast *node, t_shell *sh);
 
 #endif

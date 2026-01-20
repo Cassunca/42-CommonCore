@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 17:42:06 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/08 17:11:43 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/20 13:53:36 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ast	*parser(t_token *tokens)
 	t_ast	*ast;
 
 	if (check_syntax(tokens))
-		return (NULL);
+		return (NULL);	
 	ast = parse_sequence(&tokens);
 	return (ast);
 }
