@@ -6,7 +6,7 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:15:16 by amyrodri          #+#    #+#             */
-/*   Updated: 2026/01/20 13:55:09 by cassunca         ###   ########.fr       */
+/*   Updated: 2026/01/21 13:59:59 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ t_redir	*redirs(t_token **tokens, t_token_type type)
 {
 	t_redir			*redir;
 	t_redir_type	rtype;
-	t_redir			*r;
 
-	redir = NULL;
 	rtype = redir_type(type);
 	*tokens = (*tokens)->next;
 	if (!*tokens || (*tokens)->type != TK_WORD)
@@ -26,11 +24,10 @@ t_redir	*redirs(t_token **tokens, t_token_type type)
 		printf("Error: filename expected\n");
 		exit (1);
 	}
-	r = malloc(sizeof(t_redir));
-	r->type = rtype;
-	r->file = ft_strdup((*tokens)->value);
-	r->next = redir;
-	redir = r;
+	redir = malloc(sizeof(t_redir));
+	redir->type = rtype;
+	redir->file = ft_strdup((*tokens)->value);
+	redir->next = NULL;
 	*tokens = (*tokens)->next;
 	return (redir);
 }
@@ -77,7 +74,7 @@ t_ast	*parse_command(t_token **tokens)
 			break ;
 		if (type == TK_REDIR_IN || type == TK_REDIR_OUT || type == TK_APPEND || type == TK_HEREDOC)
 		{
-			redir = redirs(tokens, type);
+			add_redir_back(&cmd->redir, redirs(tokens, type));
 			continue ;
 		}
 		if (type == TK_WORD)
@@ -86,7 +83,6 @@ t_ast	*parse_command(t_token **tokens)
 			continue ;
 		}
 	}
-	cmd->redir = redir;
 	cmd->alias_expanded = 0;
 	return (new_node(NODE_CMD, NULL, NULL, cmd));
 }

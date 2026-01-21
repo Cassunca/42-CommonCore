@@ -6,7 +6,7 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:06:48 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/20 16:21:52 by cassunca         ###   ########.fr       */
+/*   Updated: 2026/01/21 13:17:20 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	run_heredoc_loop(int fd, char *delim, t_shell *sh, int expand)
 {
 	char	*line;
+	char	next;
 	int		len;
 	
 	len = ft_strlen(delim);
@@ -24,11 +25,14 @@ static void	run_heredoc_loop(int fd, char *delim, t_shell *sh, int expand)
 		line = get_next_line(0);
 		if (!line)
 			break ;
-		if (ft_strncmp(line, delim, len) == 0 && line[len] == '\n' 
-            && line[len + 1] == '\0')
+		if (ft_strncmp(line, delim, len) == 0)
 		{
-			free(line);
-			break ;
+			next = line[len];
+			if (next == '\n' || next == '\r' || next == ' ' || next == '\0')
+			{
+				free(line);
+				break ;
+			}
 		}
 		if (expand)
 			line = expand_variables_in_heredoc(line, sh);
@@ -49,7 +53,7 @@ int	exec_heredoc(t_redir *redir, t_shell *sh)
 	if (fd < 0)
 		return (1);
 	exp = !check_if_quoted(redir->file);
-	tmp = ft_strtrim(redir->file, "\'\" ");
+	tmp = ft_strtrim(redir->file, " \"\'\t\n");
 	run_heredoc_loop(fd, tmp, sh, exp);
 	close(fd);
 	free(tmp);
