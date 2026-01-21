@@ -6,24 +6,21 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:01:42 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/20 16:17:44 by cassunca         ###   ########.fr       */
+/*   Updated: 2026/01/21 15:12:10 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	is_delimiter(char *line, char *delimiter)
+int is_delimiter(char *line, char *delimiter)
 {
-	size_t	len;
-	
-	if (!line || !delimiter)
-		return (0);
-	len = ft_strlen(delimiter);
-	if (ft_strncmp(line, delimiter, len) == 0)
-	{
-		if (line[len] == '\n' || line[len] == '\0')
-			return (1);
-	}
+	int i;
+
+	i = 0;
+	while (line[i] && delimiter[i] && line[i] == delimiter[i])
+		i++;
+	if (delimiter[i] == '\0' && (line[i] == '\n' || line[i] == '\0'))
+		return (1);
 	return (0);
 }
 

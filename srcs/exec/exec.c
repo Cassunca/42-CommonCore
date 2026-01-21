@@ -6,7 +6,7 @@
 /*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 02:36:20 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/20 15:55:16 by cassunca         ###   ########.fr       */
+/*   Updated: 2026/01/21 14:34:10 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	execute_ast(t_ast *root, t_env_table *env)
 {
 	if (!root)
 		return (0);
-	if (root->type == NODE_PIPE)
+	else if (root->type == NODE_PIPE)
 		return (handle_pipe(root, env));
-	if (root->type == NODE_CMD)
+	else if (root->type == NODE_CMD)
 		return (execute_cmd(root, env));
-	if (root->type == NODE_AND)
+	else if (root->type == NODE_AND)
 		return (handle_and(root, env));
-	if (root->type == NODE_OR)
+	else if (root->type == NODE_OR)
 		return (handle_or(root, env));
 	return (1);
 }
