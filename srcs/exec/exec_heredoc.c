@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:06:48 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/22 14:38:25 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 18:27:04 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 static void	sig_handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
-    {
-        handler(sig); 
-        ioctl(STDIN_FILENO, TIOCSTI, "\n");
-    }
+	{
+		handler(sig);
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	}
 }
 
 static void	run_heredoc_loop(int fd, char *delim, t_shell *sh, int expand)
 {
 	char	*line;
-	
+
 	while (1)
 	{
 		if (get_signal() == SIGINT)
-            break ;
+			break ;
 		ft_putstr_fd("> ", 1);
 		line = get_next_line(0);
 		if (!line)
@@ -59,12 +59,12 @@ int	exec_heredoc(t_redir *redir, t_shell *sh)
 	exp = !check_if_quoted(redir->file);
 	tmp = ft_strtrim(redir->file, " \"\'\t\n\r\v\f");
 	reset_signal();
-    signal(SIGINT, sig_handler_heredoc);
+	signal(SIGINT, sig_handler_heredoc);
 	run_heredoc_loop(fd, tmp, sh, exp);
 	close(fd);
 	free(tmp);
 	if (get_signal() == SIGINT)
-        return (INTERRUPTED_BY_SIGINT);
+		return (INTERRUPTED_BY_SIGINT);
 	free(redir->file);
 	redir->file = ft_strdup(".heredoc_tmp");
 	redir->type = REDIR_IN;
