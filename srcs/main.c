@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/22 12:18:29 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:41:58 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,15 @@ void	input(char	*line, t_shell *sh)
 	ast_root = parser(token);
 	free_tokens(token);
 	expand_alias_ast(ast_root, sh);
-	expand_ast(ast_root, sh->env);
+	expand_ast(ast_root, sh);
 	if (traverse_ast_heredoc(ast_root, sh) == INTERRUPTED_BY_SIGINT)
 	{
 		free_ast(ast_root);
-		free_tokens(token);
 		return ;
 	}
 	if (ast_root)
 		sh->last_status = execute_ast(ast_root, sh);
 	free_ast(ast_root);
-	free_tokens(token);
 	unlink(".heredoc_tmp");
 }
 

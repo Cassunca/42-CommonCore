@@ -111,6 +111,8 @@ SRCS_EXEC	= exec.c				\
 			  exec_pipe.c			\
 			  exec_and.c			\
 			  exec_or.c				\
+			  exec_sub.c			\
+			  exec_seq.c			\
 			  exec_path.c			\
 			  exec_utils.c			\
 			  exec_heredoc.c		\

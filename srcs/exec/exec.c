@@ -6,7 +6,7 @@
 /*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 02:36:20 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/22 12:17:55 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/22 12:22:38 by kamys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	execute_ast(t_ast *root, t_shell *sh)
 	if (!root)
 		return (0);
 	else if (root->type == NODE_PIPE)
-		return (handle_pipe(root, env));
+		return (handle_pipe(root, sh));
 	else if (root->type == NODE_CMD)
-		return (execute_cmd(root, env));
+		return (execute_cmd(root, sh));
 	else if (root->type == NODE_AND)
-		return (handle_and(root, env));
+		return (handle_and(root, sh));
 	else if (root->type == NODE_OR)
-		return (handle_or(root, env));
+		return (handle_or(root, sh));
 	if (root->type == NODE_SUB)
 		return (execute_sub(root, sh));
 	if (root->type == NODE_SEQ)
