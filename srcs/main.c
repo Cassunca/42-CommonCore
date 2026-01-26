@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/22 14:37:58 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/26 15:14:53 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	input(char	*line, t_shell *sh)
 	t_token	*token;
 	t_ast	*ast_root;
 
+	reset_signal();
 	token = lexer(line);
 	if (!token)
 		return ;
@@ -27,6 +28,7 @@ void	input(char	*line, t_shell *sh)
 	if (traverse_ast_heredoc(ast_root, sh) == INTERRUPTED_BY_SIGINT)
 	{
 		free_ast(ast_root);
+		reset_signal();
 		return ;
 	}
 	if (ast_root)

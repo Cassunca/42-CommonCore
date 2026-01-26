@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:06:48 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/22 18:27:04 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/26 15:06:07 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	sig_handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		handler(sig);
+		(void)sig;
+		set_signal_int();
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	}
 }
@@ -63,6 +64,7 @@ int	exec_heredoc(t_redir *redir, t_shell *sh)
 	run_heredoc_loop(fd, tmp, sh, exp);
 	close(fd);
 	free(tmp);
+	setup_sig();
 	if (get_signal() == SIGINT)
 		return (INTERRUPTED_BY_SIGINT);
 	free(redir->file);
