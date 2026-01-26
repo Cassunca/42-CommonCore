@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 13:53:39 by amyrodri          #+#    #+#             */
-/*   Updated: 2026/01/26 14:37:52 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:37:32 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	split_path(char *word, char **dir, char **pat)
 	}
 }
 
-static char	**isso_ai(char **matches, char *d_name, char *dir_name)
+static char	**matches_full(char **matches, char *d_name, char *dir_name)
 {
 	char			*tmp;
 	char			*full;
@@ -42,7 +42,7 @@ static char	**isso_ai(char **matches, char *d_name, char *dir_name)
 	return (matches);
 }
 
-static char	**alguma_coisa(char **matches, char **argv)
+static char	**free_matches(char **matches, char **argv)
 {
 	char	**tmp;
 
@@ -62,7 +62,7 @@ static char	**handle_entry(t_wc *wc, struct dirent *entry)
 	if (!ft_strcmp(wc->dir_name, "."))
 		wc->matches = argv_add(wc->matches, entry->d_name);
 	else
-		wc->matches = isso_ai(wc->matches,
+		wc->matches = matches_full(wc->matches,
 				entry->d_name, wc->dir_name);
 	wc->count++;
 	return (wc->matches);
@@ -91,6 +91,6 @@ char	**wildcard_expand(char	**argv, char *word)
 	free(wc.pattern);
 	if (wc.count == 0)
 		return (argv_add(argv, word));
-	argv = alguma_coisa(wc.matches, argv);
+	argv = free_matches(wc.matches, argv);
 	return (argv);
 }
