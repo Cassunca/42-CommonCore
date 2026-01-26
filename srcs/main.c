@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/26 15:35:08 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:39:44 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static void	exit_coder(t_shell *sh)
 
 static void	run_interactive_shell(t_shell *sh)
 {
-	char		*line;
-	char		*prompt;
-	int			exit_code;
 	struct termios	term;
+	char			*line;
+	char			*prompt;
+	int				exit_code;
 
 	tcgetattr(STDIN_FILENO, &term);
 	while (!sh->should_exit)
