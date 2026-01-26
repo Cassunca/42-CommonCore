@@ -6,13 +6,13 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/26 15:14:53 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:35:08 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	input(char	*line, t_shell *sh)
+static void	input(char	*line, t_shell *sh)
 {
 	t_token	*token;
 	t_ast	*ast_root;
@@ -37,13 +37,21 @@ void	input(char	*line, t_shell *sh)
 	unlink(".heredoc_tmp");
 }
 
-void	run_interactive_shell(t_shell *sh)
+static void	exit_coder(t_shell *sh)
+{
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	sh->exit_code = sh->last_status;
+	sh->should_exit = 1;
+}
+
+static void	run_interactive_shell(t_shell *sh)
 {
 	char		*line;
 	char		*prompt;
 	int			exit_code;
+	struct termios	term;
 
-	sh->should_exit = 0;
+	tcgetattr(STDIN_FILENO, &term);
 	while (!sh->should_exit)
 	{
 		prompt = get_prompt(sh->env);
@@ -51,22 +59,21 @@ void	run_interactive_shell(t_shell *sh)
 		free(prompt);
 		if (!line)
 		{
-			ft_putendl_fd("exit", STDOUT_FILENO);
-			sh->exit_code = sh->last_status;
-			sh->should_exit = 1;
+			exit_coder(sh);
 			break ;
 		}
 		if (*line)
 			add_history(line);
 		input(line, sh);
 		free(line);
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	}
 	exit_code = sh->exit_code;
 	clean_up(sh);
 	exit(exit_code);
 }
 
-int	run_command_mode(char **argv, t_shell *sh)
+static int	run_command_mode(char **argv, t_shell *sh)
 {
 	if (!ft_strncmp(argv[1], "-c", 2))
 	{
@@ -97,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 	shell_upadate(sh);
 	init_ps1(sh->env);
 	sh->aliases = init_alias(97);
+	sh->should_exit = 0;
 	if (argc >= 3)
 		status = run_command_mode(argv, sh);
 	else if (isatty(STDIN_FILENO))

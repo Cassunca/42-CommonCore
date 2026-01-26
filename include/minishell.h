@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:23:31 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/26 15:07:03 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:35:51 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
+# include <termios.h>
 
 typedef struct s_alias_table	t_alias_table;
 
@@ -47,10 +48,6 @@ typedef struct s_shell
 	int				exit_code;
 	int				should_exit;
 }	t_shell;
-
-/* ========== INPUT ========== */
-
-void	input(char	*line, t_shell *sh);
 
 /* ========== FREE ========== */
 
