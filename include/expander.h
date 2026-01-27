@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 14:40:55 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/26 14:38:09 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/27 14:59:00 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	expand_cmd(t_cmd *cmd, t_shell *sh);
 void	expand_redir(t_redir *redir, t_shell *sh);
 void	handle_tilde(char **res, char *s, int *i, t_shell *sh);
 void	handle_dolar(char **res, char *s, int *i, t_shell *sh);
-char	*expand_word(char *s, t_shell *sh);
+char	*expand_word(char *s, t_shell *sh, int *quote);
 
 /* ========== EXPAND QUOTES ========== */
 

@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:09:00 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/26 14:43:20 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/27 14:58:44 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,18 @@ static int	with_quotes(char **res, char *s, int *i, t_shell *sh)
 	return (quote);
 }
 
-char	*expand_word(char *s, t_shell *sh)
+char	*expand_word(char *s, t_shell *sh, int *quote)
 {
 	char	*res;
-	int		quote;
 	int		i;
 
 	res = ft_strdup("");
 	i = 0;
-	quote = 0;
 	while (s[i])
 	{
-		quote = with_quotes(&res, s, &i, sh);
+		*quote |= with_quotes(&res, s, &i, sh);
+		if (!s[i])
+			break ;
 		if (s[i] == '$')
 			handle_dolar(&res, s, &i, sh);
 		else if (s[i] == '~')
@@ -62,7 +62,7 @@ char	*expand_word(char *s, t_shell *sh)
 		else
 			append_char(&res, s[i++]);
 	}
-	if (quote)
+	if (*quote)
 		scape_wildcard(res);
 	free(s);
 	return (res);

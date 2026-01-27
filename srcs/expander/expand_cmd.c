@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:05:34 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/26 13:54:07 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/27 15:00:46 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ void	expand_cmd(t_cmd *cmd, t_shell *sh)
 	char	**new;
 	char	*word;
 	int		i;
+	int		quote;
 
 	i = 0;
 	new = NULL;
 	i = 0;
 	while (cmd->argv && cmd->argv[i])
 	{
-		word = expand_word(cmd->argv[i], sh);
-		if (has_wildcard(word))
+		quote = 0;
+		word = expand_word(cmd->argv[i], sh, &quote);
+		if (!quote && has_wildcard(word))
 			new = wildcard_expand(new, word);
 		else
 		{

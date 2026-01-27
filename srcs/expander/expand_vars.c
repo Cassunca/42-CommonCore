@@ -6,7 +6,7 @@
 /*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:08:56 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/21 15:36:31 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/27 15:12:30 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,18 @@ void	handle_dolar(char **res, char *s, int *i, t_shell *sh)
 	int		start;
 
 	(*i)++;
+	if (!s[*i])
+		return (append_char(res, '$'));
 	if (s[*i] == '$')
-	{
-		pid_minishell(res, i);
-		return ;
-	}
+		return (pid_minishell(res, i));
 	if (s[*i] == '?')
 	{
 		append_str(res, ft_itoa(sh->last_status));
 		(*i)++;
 		return ;
 	}
+	if (!ft_isalpha(s[*i]) && s[*i] != '_')
+		return (append_char(res, '$'));
 	start = *i;
 	while (ft_isalnum(s[*i]) || s[*i] == '_')
 		(*i)++;

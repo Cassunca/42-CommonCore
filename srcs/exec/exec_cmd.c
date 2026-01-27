@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kamys <kamys@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:15:03 by cassunca          #+#    #+#             */
-/*   Updated: 2026/01/22 19:31:10 by kamys            ###   ########.fr       */
+/*   Updated: 2026/01/27 14:23:44 by amyrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	execute_cmd(t_ast *cmd_node, t_shell *sh)
 	cmd = (t_cmd *)cmd_node->content;
 	if (!cmd || !cmd->argv || !cmd->argv[0])
 		return (0);
+	expand_cmd(cmd, sh);
 	if (is_builtin(cmd->argv))
 		return (exec_builtin_with_redirect(cmd, sh));
 	path_cmd = resolve_path(cmd->argv[0], sh->env);
