@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amyrodri <amyrodri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cassunca <cassunca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:17:23 by kamys             #+#    #+#             */
-/*   Updated: 2026/01/27 14:54:33 by amyrodri         ###   ########.fr       */
+/*   Updated: 2026/01/28 14:12:50 by cassunca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	input(char	*line, t_shell *sh)
 	ast_root = parser(token);
 	free_tokens(token);
 	expand_alias_ast(ast_root, sh);
-	// expand_ast(ast_root, sh);
 	if (traverse_ast_heredoc(ast_root, sh) == INTERRUPTED_BY_SIGINT)
 	{
 		free_ast(ast_root);
